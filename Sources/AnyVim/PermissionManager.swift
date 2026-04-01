@@ -78,7 +78,11 @@ final class PermissionManager: PermissionChecking {
     }
 
     /// Open System Settings to the Input Monitoring privacy pane.
+    ///
+    /// Also calls CGRequestListenEventAccess() to register this app in the
+    /// Input Monitoring list — without this call the app won't appear there.
     func openInputMonitoringSettings() {
+        CGRequestListenEventAccess()
         NSWorkspace.shared.open(
             URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent")!
         )

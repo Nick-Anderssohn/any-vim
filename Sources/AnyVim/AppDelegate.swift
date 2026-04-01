@@ -1,7 +1,15 @@
 import AppKit
+import CoreGraphics
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
+
+    static func main() {
+        let app = NSApplication.shared
+        let delegate = AppDelegate()
+        app.delegate = delegate
+        app.run()
+    }
 
     // MARK: - Retained properties (all must be instance vars — local scope = released)
 
@@ -24,6 +32,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                    accessibilityDescription: "AnyVim")
             button.image?.isTemplate = true // Adapts to dark/light menu bar automatically
         }
+
+        // Register with Input Monitoring early so the app appears in System Settings
+        CGRequestListenEventAccess()
 
         // Create managers
         permissionManager = PermissionManager()
