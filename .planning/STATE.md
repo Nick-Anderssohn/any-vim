@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-04-01T19:30:27.901Z"
-last_activity: 2026-04-01
+stopped_at: Phase 3 UI-SPEC approved
+last_updated: "2026-04-01T19:20:01.873Z"
+last_activity: 2026-04-01 -- Phase 03 execution started
 progress:
   total_phases: 6
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  completed_phases: 2
+  total_plans: 8
+  completed_plans: 5
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** Seamless vim editing in any text input on macOS — the trigger-edit-return loop must feel instant and reliable.
-**Current focus:** Phase 01 — app-shell-and-permissions
+**Current focus:** Phase 03 — accessibility-bridge-and-clipboard
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-04-01
+Phase: 03 (accessibility-bridge-and-clipboard) — EXECUTING
+Plan: 1 of 3
+Status: Executing Phase 03
+Last activity: 2026-04-01 -- Phase 03 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -54,7 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-app-shell-and-permissions P01 | 12 | 2 tasks | 6 files |
 | Phase 01-app-shell-and-permissions P02 | 8 | 2 tasks | 9 files |
-| Phase 03 P01 | 526 | 3 tasks | 6 files |
+| Phase 02-global-hotkey-detection P02 | 1225 | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -71,8 +71,8 @@ Recent decisions affecting current work:
 - [Phase 01-app-shell-and-permissions]: Swift 6 language mode with SWIFT_STRICT_CONCURRENCY=complete from first commit per CLAUDE.md guidance
 - [Phase 01-app-shell-and-permissions]: PermissionChecking protocol extended with open-settings methods to keep MenuBarController fully protocol-typed (no concrete cast needed)
 - [Phase 01-app-shell-and-permissions]: MockLoginItemService implements first-run logic in-memory for hermetic tests with no real UserDefaults mutation
-- [Phase 03]: ClipboardSnapshot typealias [[NSPasteboard.PasteboardType: Data]] enables clean deep copy without NSPasteboardItem subclassing
-- [Phase 03]: TempFileManager.deleteTempFile is best-effort (try?) — callers should not need error handling on cleanup
+- [Phase 02-global-hotkey-detection]: AppDelegate and MenuBarController marked @MainActor — both reference @MainActor-isolated HotkeyManaging protocol members; Swift 6 strict concurrency requires explicit isolation
+- [Phase 02-global-hotkey-detection]: MenuBarController created before hotkeyManager.install() to avoid nil crash on synchronous health change callback
 
 ### Pending Todos
 
@@ -85,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T19:30:27.899Z
-Stopped at: Completed 03-01-PLAN.md
-Resume file: None
+Last session: 2026-04-01T18:42:23.577Z
+Stopped at: Phase 3 UI-SPEC approved
+Resume file: .planning/phases/03-accessibility-bridge-and-clipboard/03-UI-SPEC.md

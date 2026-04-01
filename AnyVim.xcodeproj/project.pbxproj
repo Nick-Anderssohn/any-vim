@@ -15,11 +15,13 @@
 		A1000006 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000008 /* NotificationManager.swift */; };
 		A1000007 /* PermissionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000009 /* PermissionManagerTests.swift */; };
 		A1000008 /* LoginItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010 /* LoginItemManagerTests.swift */; };
-		A1000009 /* SystemProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011 /* SystemProtocols.swift */; };
-		A1000010 /* ClipboardGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012 /* ClipboardGuard.swift */; };
-		A1000011 /* TempFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000013 /* TempFileManager.swift */; };
-		A1000012 /* ClipboardGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000014 /* ClipboardGuardTests.swift */; };
-		A1000013 /* TempFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000015 /* TempFileManagerTests.swift */; };
+		A1000009 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000011 /* HotkeyManager.swift */; };
+		A1000010 /* HotkeyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012 /* HotkeyManagerTests.swift */; };
+		A1000011 /* SystemProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000013 /* SystemProtocols.swift */; };
+		A1000012 /* ClipboardGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000014 /* ClipboardGuard.swift */; };
+		A1000013 /* TempFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000015 /* TempFileManager.swift */; };
+		A1000014 /* ClipboardGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000016 /* ClipboardGuardTests.swift */; };
+		A1000015 /* TempFileManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000017 /* TempFileManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,11 +45,13 @@
 		A2000008 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		A2000009 /* PermissionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManagerTests.swift; sourceTree = "<group>"; };
 		A2000010 /* LoginItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManagerTests.swift; sourceTree = "<group>"; };
-		A2000011 /* SystemProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProtocols.swift; sourceTree = "<group>"; };
-		A2000012 /* ClipboardGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardGuard.swift; sourceTree = "<group>"; };
-		A2000013 /* TempFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempFileManager.swift; sourceTree = "<group>"; };
-		A2000014 /* ClipboardGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardGuardTests.swift; sourceTree = "<group>"; };
-		A2000015 /* TempFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempFileManagerTests.swift; sourceTree = "<group>"; };
+		A2000011 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		A2000012 /* HotkeyManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManagerTests.swift; sourceTree = "<group>"; };
+		A2000013 /* SystemProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProtocols.swift; sourceTree = "<group>"; };
+		A2000014 /* ClipboardGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardGuard.swift; sourceTree = "<group>"; };
+		A2000015 /* TempFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempFileManager.swift; sourceTree = "<group>"; };
+		A2000016 /* ClipboardGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardGuardTests.swift; sourceTree = "<group>"; };
+		A2000017 /* TempFileManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempFileManagerTests.swift; sourceTree = "<group>"; };
 		A3000001 /* AnyVim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyVim.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3000002 /* AnyVimTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnyVimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -88,9 +92,10 @@
 				A2000006 /* PermissionManager.swift */,
 				A2000007 /* LoginItemManager.swift */,
 				A2000008 /* NotificationManager.swift */,
-				A2000011 /* SystemProtocols.swift */,
-				A2000012 /* ClipboardGuard.swift */,
-				A2000013 /* TempFileManager.swift */,
+				A2000011 /* HotkeyManager.swift */,
+				A2000013 /* SystemProtocols.swift */,
+				A2000014 /* ClipboardGuard.swift */,
+				A2000015 /* TempFileManager.swift */,
 			);
 			name = Sources;
 			path = Sources/AnyVim;
@@ -111,8 +116,9 @@
 				A2000003 /* MenuBarControllerTests.swift */,
 				A2000009 /* PermissionManagerTests.swift */,
 				A2000010 /* LoginItemManagerTests.swift */,
-				A2000014 /* ClipboardGuardTests.swift */,
-				A2000015 /* TempFileManagerTests.swift */,
+				A2000012 /* HotkeyManagerTests.swift */,
+				A2000016 /* ClipboardGuardTests.swift */,
+				A2000017 /* TempFileManagerTests.swift */,
 			);
 			path = AnyVimTests;
 			sourceTree = "<group>";
@@ -221,9 +227,10 @@
 				A1000004 /* PermissionManager.swift in Sources */,
 				A1000005 /* LoginItemManager.swift in Sources */,
 				A1000006 /* NotificationManager.swift in Sources */,
-				A1000009 /* SystemProtocols.swift in Sources */,
-				A1000010 /* ClipboardGuard.swift in Sources */,
-				A1000011 /* TempFileManager.swift in Sources */,
+				A1000009 /* HotkeyManager.swift in Sources */,
+				A1000011 /* SystemProtocols.swift in Sources */,
+				A1000012 /* ClipboardGuard.swift in Sources */,
+				A1000013 /* TempFileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,8 +241,9 @@
 				A1000003 /* MenuBarControllerTests.swift in Sources */,
 				A1000007 /* PermissionManagerTests.swift in Sources */,
 				A1000008 /* LoginItemManagerTests.swift in Sources */,
-				A1000012 /* ClipboardGuardTests.swift in Sources */,
-				A1000013 /* TempFileManagerTests.swift in Sources */,
+				A1000010 /* HotkeyManagerTests.swift in Sources */,
+				A1000014 /* ClipboardGuardTests.swift in Sources */,
+				A1000015 /* TempFileManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
