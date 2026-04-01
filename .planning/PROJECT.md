@@ -12,11 +12,10 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Menu bar app with status icon that runs in the background — Validated in Phase 1: App Shell and Permissions
 
 ### Active
 
-- [ ] Menu bar app with status icon that runs in the background
 - [ ] System-wide double-tap Control key detection to trigger vim
 - [ ] Grab existing text from the focused text field (Cmd+A, Cmd+C via Accessibility APIs)
 - [ ] Write grabbed text to a temporary file
@@ -56,7 +55,9 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Swift over Go | Accessibility APIs, global event taps, AppKit menu bar — all native Swift. Go would require extensive, fragile FFI bridging | — Pending |
+| Swift over Go | Accessibility APIs, global event taps, AppKit menu bar — all native Swift. Go would require extensive, fragile FFI bridging | Confirmed in Phase 1 |
+| No-storyboard menu bar app | Pure code setup via static func main() — NSPrincipalClass alone doesn't wire delegate without nib | Established in Phase 1 |
+| Developer signing required from Phase 1 | TCC won't register ad-hoc signed apps in privacy settings | Confirmed in Phase 1 |
 | Temp file for vim I/O | Vim naturally writes to files on :wq. Simpler and more reliable than trying to capture vim's stdout or use IPC | — Pending |
 | Cmd+A/Cmd+C/Cmd+V for text field interaction | Standard macOS way to interact with text fields in other apps via Accessibility. Works across virtually all apps | — Pending |
 
@@ -78,4 +79,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-31 after initialization*
+*Last updated: 2026-03-31 after Phase 1 completion*
