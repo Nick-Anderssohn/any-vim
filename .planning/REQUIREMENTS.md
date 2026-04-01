@@ -97,39 +97,39 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HOTKEY-01 | | Pending |
-| HOTKEY-02 | | Pending |
-| HOTKEY-03 | | Pending |
-| PERM-01 | | Pending |
-| PERM-02 | | Pending |
-| PERM-03 | | Pending |
-| CAPT-01 | | Pending |
-| CAPT-02 | | Pending |
-| CAPT-03 | | Pending |
-| CAPT-04 | | Pending |
-| VIM-01 | | Pending |
-| VIM-02 | | Pending |
-| VIM-03 | | Pending |
-| VIM-04 | | Pending |
-| REST-01 | | Pending |
-| REST-02 | | Pending |
-| REST-03 | | Pending |
-| REST-04 | | Pending |
-| REST-05 | | Pending |
-| MENU-01 | | Pending |
-| MENU-02 | | Pending |
-| MENU-03 | | Pending |
-| MENU-04 | | Pending |
-| CONF-01 | | Pending |
-| COMPAT-01 | | Pending |
-| COMPAT-02 | | Pending |
-| COMPAT-03 | | Pending |
+| HOTKEY-01 | Phase 2 | Pending |
+| HOTKEY-02 | Phase 2 | Pending |
+| HOTKEY-03 | Phase 2 | Pending |
+| PERM-01 | Phase 1 | Pending |
+| PERM-02 | Phase 1 | Pending |
+| PERM-03 | Phase 1 | Pending |
+| CAPT-01 | Phase 3 | Pending |
+| CAPT-02 | Phase 3 | Pending |
+| CAPT-03 | Phase 3 | Pending |
+| CAPT-04 | Phase 3 | Pending |
+| VIM-01 | Phase 4 | Pending |
+| VIM-02 | Phase 4 | Pending |
+| VIM-03 | Phase 4 | Pending |
+| VIM-04 | Phase 4 | Pending |
+| REST-01 | Phase 5 | Pending |
+| REST-02 | Phase 5 | Pending |
+| REST-03 | Phase 5 | Pending |
+| REST-04 | Phase 5 | Pending |
+| REST-05 | Phase 5 | Pending |
+| MENU-01 | Phase 1 | Pending |
+| MENU-02 | Phase 6 | Pending |
+| MENU-03 | Phase 1 | Pending |
+| MENU-04 | Phase 1 | Pending |
+| CONF-01 | Phase 6 | Pending |
+| COMPAT-01 | Phase 3 | Pending |
+| COMPAT-02 | Phase 3 | Pending |
+| COMPAT-03 | Phase 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 27 total
-- Mapped to phases: 0
-- Unmapped: 27
+- Mapped to phases: 27
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-31*
-*Last updated: 2026-03-31 after initial definition*
+*Last updated: 2026-03-31 after roadmap creation — all 27 v1 requirements mapped*
