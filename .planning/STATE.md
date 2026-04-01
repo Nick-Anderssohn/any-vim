@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-04-01T06:05:41.631Z"
-last_activity: 2026-04-01 -- Phase 02 execution started
+stopped_at: Completed 02-global-hotkey-detection 02-02-PLAN.md (awaiting Task 2 manual verification checkpoint)
+last_updated: "2026-04-01T06:21:32.925Z"
+last_activity: 2026-04-01
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-31)
 ## Current Position
 
 Phase: 02 (global-hotkey-detection) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 02
-Last activity: 2026-04-01 -- Phase 02 execution started
+Plan: 2 of 2
+Status: Ready to execute
+Last activity: 2026-04-01
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-app-shell-and-permissions P01 | 12 | 2 tasks | 6 files |
 | Phase 01-app-shell-and-permissions P02 | 8 | 2 tasks | 9 files |
+| Phase 02-global-hotkey-detection P02 | 1225 | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -70,6 +71,8 @@ Recent decisions affecting current work:
 - [Phase 01-app-shell-and-permissions]: Swift 6 language mode with SWIFT_STRICT_CONCURRENCY=complete from first commit per CLAUDE.md guidance
 - [Phase 01-app-shell-and-permissions]: PermissionChecking protocol extended with open-settings methods to keep MenuBarController fully protocol-typed (no concrete cast needed)
 - [Phase 01-app-shell-and-permissions]: MockLoginItemService implements first-run logic in-memory for hermetic tests with no real UserDefaults mutation
+- [Phase 02-global-hotkey-detection]: AppDelegate and MenuBarController marked @MainActor — both reference @MainActor-isolated HotkeyManaging protocol members; Swift 6 strict concurrency requires explicit isolation
+- [Phase 02-global-hotkey-detection]: MenuBarController created before hotkeyManager.install() to avoid nil crash on synchronous health change callback
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T05:19:44.185Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-global-hotkey-detection/02-CONTEXT.md
+Last session: 2026-04-01T06:21:32.923Z
+Stopped at: Completed 02-global-hotkey-detection 02-02-PLAN.md (awaiting Task 2 manual verification checkpoint)
+Resume file: None

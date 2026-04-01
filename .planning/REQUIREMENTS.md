@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Hotkey
 
-- [ ] **HOTKEY-01**: App detects double-tap of Control key system-wide via CGEventTap
+- [x] **HOTKEY-01**: App detects double-tap of Control key system-wide via CGEventTap
 - [ ] **HOTKEY-02**: Double-tap detection uses a timing threshold (~350ms) to distinguish from single taps and held modifier
-- [ ] **HOTKEY-03**: Hotkey works regardless of which application is focused
+- [x] **HOTKEY-03**: Hotkey works regardless of which application is focused
 
 ### Permissions
 
@@ -97,9 +97,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| HOTKEY-01 | Phase 2 | Pending |
+| HOTKEY-01 | Phase 2 | Complete |
 | HOTKEY-02 | Phase 2 | Pending |
-| HOTKEY-03 | Phase 2 | Pending |
+| HOTKEY-03 | Phase 2 | Complete |
 | PERM-01 | Phase 1 | Complete |
 | PERM-02 | Phase 1 | Complete |
 | PERM-03 | Phase 1 | Complete |

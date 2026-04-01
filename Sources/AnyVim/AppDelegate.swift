@@ -2,6 +2,7 @@ import AppKit
 import CoreGraphics
 
 @main
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     static func main() {
@@ -17,6 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var permissionManager: PermissionManager!
     private var loginItemManager: LoginItemManager!
     private var notificationManager: NotificationManager!
+    private var hotkeyManager: HotkeyManager!
     private var menuBarController: MenuBarController!
 
     // MARK: - Launch
@@ -47,12 +49,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Enable launch at login on first run (D-07)
         loginItemManager.enableIfFirstRun()
 
-        // Build menu with live state
+        // Create and wire HotkeyManager (D-06: install immediately if permissions already granted)
+        hotkeyManager = HotkeyManager()
+        hotkeyManager.onTrigger = { [weak self] in self?.handleHotkeyTrigger() }
+        hotkeyManager.onHealthChange = { [weak self] _ in self?.rebuildMenu() }
+
+        // Build menu with live state (must happen before install() — the health change
+        // callback fires synchronously during install and calls rebuildMenu())
         menuBarController = MenuBarController(
             permissionManager: permissionManager,
-            loginItemManager: loginItemManager
+            loginItemManager: loginItemManager,
+            hotkeyManager: hotkeyManager
         )
         statusItem.menu = menuBarController.buildMenu()
+
+        // Install tap after menu is ready (health change may fire synchronously)
+        hotkeyManager.install(permissionManager: permissionManager)
 
         // Sequential alert flow (D-01, D-02): show Accessibility alert first if missing
         if !permissionManager.isAccessibilityGranted {
@@ -71,9 +83,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Permission change handler
 
     private func handlePermissionChange(accessibilityChanged: Bool, inputMonitoringChanged: Bool) {
-        // Rebuild menu with updated live state
-        statusItem.menu = menuBarController.buildMenu()
-
         if accessibilityChanged && permissionManager.isAccessibilityGranted {
             // Accessibility was just granted — notify the user (D-04)
             notificationManager.notifyPermissionGranted("Accessibility")
@@ -88,6 +97,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Input Monitoring was just granted — notify the user (D-04)
             notificationManager.notifyPermissionGranted("Input Monitoring")
         }
+
+        // Attempt tap installation if both permissions are now granted and tap is not yet healthy
+        // (D-06: install when notified permissions granted)
+        if !hotkeyManager.isTapHealthy {
+            hotkeyManager.install(permissionManager: permissionManager)
+        }
+
+        // Rebuild menu with updated live state (including tap health)
+        rebuildMenu()
+    }
+
+    // MARK: - Menu helper
+
+    private func rebuildMenu() {
+        statusItem.menu = menuBarController.buildMenu()
+    }
+
+    // MARK: - Hotkey trigger
+
+    /// Placeholder handler for the hotkey trigger. Full edit-cycle wiring comes in Phase 5.
+    private func handleHotkeyTrigger() {
+        print("[AnyVim] Hotkey triggered!")
     }
 
     // MARK: - Permission alerts
