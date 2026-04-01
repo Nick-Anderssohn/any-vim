@@ -31,7 +31,7 @@ decisions:
 metrics:
   duration_seconds: 1225
   completed_date: "2026-04-01T06:20:25Z"
-  tasks_completed: 1
+  tasks_completed: 2
   files_changed: 3
 ---
 
@@ -45,9 +45,7 @@ HotkeyManager wired into AppDelegate with permission-triggered installation, men
 |------|------|--------|-------|
 | 1 | Wire HotkeyManager into AppDelegate and add tap health status to MenuBarController | a9be61b | Sources/AnyVim/AppDelegate.swift, Sources/AnyVim/MenuBarController.swift, AnyVimTests/MenuBarControllerTests.swift |
 
-## Task 2: Awaiting Manual Verification
-
-Task 2 is a `checkpoint:human-verify` — manual verification of system-wide double-tap Control detection. See checkpoint details returned to orchestrator.
+| 2 | Manual verification of system-wide double-tap Control detection | 48aad1f | Sources/AnyVim/HotkeyManager.swift, AnyVimTests/HotkeyManagerTests.swift |
 
 ## What Was Built
 
@@ -111,6 +109,13 @@ Task 2 is a `checkpoint:human-verify` — manual verification of system-wide dou
 - **Fix:** Added `@MainActor` to both `AppDelegate` and `MenuBarController` class declarations.
 - **Files modified:** Sources/AnyVim/AppDelegate.swift, Sources/AnyVim/MenuBarController.swift
 - **Commit:** a9be61b (included in the Task 1 commit)
+
+**3. [Rule 1 - Bug] Event tap missed intervening non-modifier keys (Ctrl+C false positive)**
+- **Found during:** Task 2 (manual verification)
+- **Issue:** The event tap only listened for `.flagsChanged` events. Regular keyDown events (like C in Ctrl+C) were invisible to the state machine, so Ctrl+C → quick Control tap falsely triggered as a double-tap.
+- **Fix:** Added `.keyDown` to the event mask and `handleKeyDown()` method that resets the state machine to `.idle`. Added `testCtrlKeyComboThenQuickTapDoesNotFire` test.
+- **Files modified:** Sources/AnyVim/HotkeyManager.swift, AnyVimTests/HotkeyManagerTests.swift
+- **Commit:** 48aad1f
 
 ## Known Stubs
 

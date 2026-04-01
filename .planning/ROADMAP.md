@@ -48,7 +48,7 @@ Plans:
 **Plans:** 1/2 plans executed
 Plans:
 - [x] 02-01-PLAN.md — HotkeyManager with CGEventTap, double-tap state machine, tap health monitor, and unit tests
-- [ ] 02-02-PLAN.md — Wire HotkeyManager into AppDelegate and MenuBarController, manual verification
+- [x] 02-02-PLAN.md — Wire HotkeyManager into AppDelegate and MenuBarController, manual verification
 
 ### Phase 3: Accessibility Bridge and Clipboard
 **Goal**: The app can grab text from any focused text field and paste edited text back, leaving the user's clipboard exactly as it was before the trigger
