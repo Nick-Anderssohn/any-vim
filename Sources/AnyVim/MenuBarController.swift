@@ -1,17 +1,24 @@
 import AppKit
 
+@MainActor
 final class MenuBarController {
 
     // MARK: - Dependencies (protocol types for testability)
 
     private let permissionManager: PermissionChecking
     private let loginItemManager: LoginItemManaging
+    private let hotkeyManager: HotkeyManaging?
 
     // MARK: - Init
 
-    init(permissionManager: PermissionChecking, loginItemManager: LoginItemManaging) {
+    init(
+        permissionManager: PermissionChecking,
+        loginItemManager: LoginItemManaging,
+        hotkeyManager: HotkeyManaging? = nil
+    ) {
         self.permissionManager = permissionManager
         self.loginItemManager = loginItemManager
+        self.hotkeyManager = hotkeyManager
     }
 
     // MARK: - Menu construction
@@ -49,6 +56,22 @@ final class MenuBarController {
             )
             item.target = self
             menu.addItem(item)
+        }
+
+        // --- Tap health status (D-09: persistent menu bar indication) ---
+
+        if let hk = hotkeyManager {
+            if hk.isTapHealthy {
+                let item = NSMenuItem(title: "Hotkey: Active", action: nil, keyEquivalent: "")
+                menu.addItem(item)
+            } else {
+                let item = NSMenuItem(
+                    title: "Hotkey: Inactive \u{2014} Tap Unhealthy",
+                    action: nil,
+                    keyEquivalent: ""
+                )
+                menu.addItem(item)
+            }
         }
 
         menu.addItem(NSMenuItem.separator())
