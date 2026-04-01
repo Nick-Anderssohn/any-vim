@@ -63,6 +63,8 @@ Phase 3 introduces no new text surfaces. All text is rendered by AppKit system c
 
 **Source:** AppKit system font defaults. AnyVim does not set explicit NSFont values — all typography is inherited from the system. Established in Phase 1 NSAlert and NSMenuItem usage.
 
+**Note on 1pt proximity (menu item label 14pt vs alert message text 13pt):** Both values are system-inherited defaults. AppKit assigns 14pt to NSMenuItem titles and 13pt to NSAlert message text. AnyVim does not set either value explicitly. The 1pt difference is intentional and unavoidable — these values cannot be changed without overriding AppKit defaults, which is not appropriate for a native menu bar utility.
+
 ---
 
 ## Color
@@ -84,7 +86,7 @@ Accent reserved for: selected NSMenuItem highlight state only. Not used for stat
 
 ## Copywriting Contract
 
-Phase 3 adds one new menu item and one new error alert condition to the existing NSMenu. All other copy is system-generated (NSAlert default buttons).
+Phase 3 adds one new menu item and one new error alert condition to the existing NSMenu.
 
 | Element | Copy |
 |---------|------|
@@ -93,11 +95,13 @@ Phase 3 adds one new menu item and one new error alert condition to the existing
 | Bridge status — restoring | "Restoring text..." |
 | Capture failure alert — message | "Text Capture Failed" |
 | Capture failure alert — informative | "AnyVim could not read the text in the focused field. Make sure Accessibility permission is granted, then try again." |
-| Capture failure alert — button | "OK" |
+| Capture failure alert — button | "Dismiss" |
 | Empty field behavior | Silent — no alert. Vim opens with an empty file. No user-visible message. (Source: CONTEXT.md D-09) |
 | Original app terminated mid-session | Silent — no alert. Focus restore is skipped. (Source: CONTEXT.md D-08) |
 | Primary CTA | Not applicable — Phase 3 has no primary CTA. The trigger is the double-tap Control hotkey, established in Phase 2. |
 | Destructive actions | None in Phase 3. Clipboard restore is automatic and non-destructive. Temp file deletion is automatic. |
+
+**Implementation note — alert button:** The capture failure alert must use `alert.addButton(withTitle: "Dismiss")` explicitly. Do not rely on AppKit's auto-generated default button, which produces "OK" and cannot be overridden without an explicit `addButton` call.
 
 **Copywriting rules (carried from Phase 1 pattern):**
 - Alert message text: Title Case, noun phrase only (no verbs)
@@ -152,7 +156,7 @@ No package registry is used in Phase 3. All APIs are from the macOS SDK (CoreGra
 
 Phase 3 has minimal new UI surface, but the following contracts apply:
 
-- NSAlert buttons must use system-standard labels ("OK", "Open System Settings") — no abbreviation
+- NSAlert buttons must use descriptive labels — use `alert.addButton(withTitle: "Dismiss")` explicitly; do not rely on AppKit's auto-generated "OK" default
 - Error alert must use `.warning` alertStyle (amber icon) not `.critical` — capture failure is recoverable
 - All NSMenuItem titles must be unique within their menu to support VoiceOver navigation
 - No custom NSView with drawing code — system components handle accessibility automatically
@@ -184,3 +188,5 @@ Phase 3 has minimal new UI surface, but the following contracts apply:
 | isTemplate icon | AppDelegate.swift line 37: `button.image?.isTemplate = true` |
 | MENU-02 deferred | ROADMAP.md Phase 6 scope |
 | No SPM dependencies | RESEARCH.md Standard Stack "Supporting: No third-party dependencies" |
+| Alert button "Dismiss" | Checker revision 2026-04-01: generic "OK" label is a Dimension 1 BLOCK |
+| 14pt/13pt proximity note | Checker revision 2026-04-01: Dimension 4 FLAG — both values are system-inherited, proximity is intentional |
