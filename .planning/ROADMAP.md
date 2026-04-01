@@ -31,9 +31,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. After the user grants a missing permission in System Settings, the app detects it within a few seconds without requiring a restart
   4. Menu contains a functioning Quit item that terminates the process cleanly
   5. App can be configured to launch at login
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 Plans:
-- [ ] 01-01-PLAN.md — Xcode project, app shell, menu bar icon, Quit menu, test infrastructure
+- [x] 01-01-PLAN.md — Xcode project, app shell, menu bar icon, Quit menu, test infrastructure
 - [ ] 01-02-PLAN.md — Permission checking, re-polling, sequential alerts, login item, notifications
 - [ ] 01-03-PLAN.md — Manual smoke test of full Phase 1 flow
 
@@ -98,7 +98,7 @@ Note: Phases 3 and 4 are independent of each other and may be planned/built in p
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. App Shell and Permissions | 0/3 | Planned | - |
+| 1. App Shell and Permissions | 1/3 | In Progress|  |
 | 2. Global Hotkey Detection | 0/? | Not started | - |
 | 3. Accessibility Bridge and Clipboard | 0/? | Not started | - |
 | 4. Vim Session | 0/? | Not started | - |

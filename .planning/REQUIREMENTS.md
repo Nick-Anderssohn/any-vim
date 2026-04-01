@@ -43,9 +43,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Menu Bar
 
-- [ ] **MENU-01**: App runs as a menu bar app with a status icon (no dock icon)
+- [x] **MENU-01**: App runs as a menu bar app with a status icon (no dock icon)
 - [ ] **MENU-02**: Menu bar icon animates or changes while a vim session is active
-- [ ] **MENU-03**: Menu includes a Quit option
+- [x] **MENU-03**: Menu includes a Quit option
 - [ ] **MENU-04**: App launches at login (optional, configurable)
 
 ### Configuration
@@ -116,9 +116,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | REST-03 | Phase 5 | Pending |
 | REST-04 | Phase 5 | Pending |
 | REST-05 | Phase 5 | Pending |
-| MENU-01 | Phase 1 | Pending |
+| MENU-01 | Phase 1 | Complete |
 | MENU-02 | Phase 6 | Pending |
-| MENU-03 | Phase 1 | Pending |
+| MENU-03 | Phase 1 | Complete |
 | MENU-04 | Phase 1 | Pending |
 | CONF-01 | Phase 6 | Pending |
 | COMPAT-01 | Phase 3 | Pending |

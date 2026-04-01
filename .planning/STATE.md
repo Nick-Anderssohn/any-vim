@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-04-01T03:08:30.477Z"
-last_activity: 2026-03-31 — Roadmap created, all 27 v1 requirements mapped across 6 phases
+status: executing
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-04-01T03:53:49.172Z"
+last_activity: 2026-04-01
 progress:
   total_phases: 6
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 1
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** Seamless vim editing in any text input on macOS — the trigger-edit-return loop must feel instant and reliable.
-**Current focus:** Phase 1 — App Shell and Permissions
+**Current focus:** Phase 01 — app-shell-and-permissions
 
 ## Current Position
 
-Phase: 1 of 6 (App Shell and Permissions)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-03-31 — Roadmap created, all 27 v1 requirements mapped across 6 phases
+Phase: 01 (app-shell-and-permissions) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-04-01
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01-app-shell-and-permissions P01 | 12 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -63,6 +64,9 @@ Recent decisions affecting current work:
 - Roadmap: Swift over Go confirmed — all core APIs (CGEventTap, AXUIElement, NSStatusItem) are native; no FFI
 - Roadmap: Developer ID signing must be configured in Phase 1 — TCC grants are code-identity-dependent from first run
 - Roadmap: Clipboard snapshot/restore placed in Phase 3 (not Phase 5) — all error exit paths must be in scope during design
+- [Phase 01-app-shell-and-permissions]: NSStatusItem held as AppDelegate instance property to prevent premature ARC release (menu bar icon vanishing)
+- [Phase 01-app-shell-and-permissions]: MenuBarController.buildMenu() stateless for Plan 01; Plan 02 injects PermissionManager and LoginItemManager for live state
+- [Phase 01-app-shell-and-permissions]: Swift 6 language mode with SWIFT_STRICT_CONCURRENCY=complete from first commit per CLAUDE.md guidance
 
 ### Pending Todos
 
@@ -75,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T03:08:30.475Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-app-shell-and-permissions/01-CONTEXT.md
+Last session: 2026-04-01T03:53:49.170Z
+Stopped at: Completed 01-01-PLAN.md
+Resume file: None
