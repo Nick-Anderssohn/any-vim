@@ -102,7 +102,7 @@ Note: Phases 3 and 4 are independent of each other and may be planned/built in p
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. App Shell and Permissions | 2/3 | In Progress|  |
-| 2. Global Hotkey Detection | 0/2 | Not started | - |
+| 2. Global Hotkey Detection | 1/2 | In Progress|  |
 | 3. Accessibility Bridge and Clipboard | 0/? | Not started | - |
 | 4. Vim Session | 0/? | Not started | - |
 | 5. Edit Cycle Integration | 0/? | Not started | - |
