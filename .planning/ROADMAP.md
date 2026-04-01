@@ -63,7 +63,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md — System API protocols, ClipboardGuard (clipboard snapshot/restore), TempFileManager
 - [x] 03-02-PLAN.md — AccessibilityBridge (capture/restore via Cmd+A/C/V), wire into AppDelegate
-- [ ] 03-03-PLAN.md — Manual verification in native apps and browsers
+- [x] 03-03-PLAN.md — Manual verification in native apps and browsers
 
 ### Phase 4: Vim Session
 **Goal**: A floating terminal window opens with the user's text loaded in vim, and the app reliably detects when the user exits via :wq or :q!

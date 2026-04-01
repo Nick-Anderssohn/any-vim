@@ -54,8 +54,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Compatibility
 
-- [ ] **COMPAT-01**: App works with native Cocoa text fields (TextEdit, Notes, Mail)
-- [ ] **COMPAT-02**: App works with browser text areas (Safari, Chrome, Firefox)
+- [x] **COMPAT-01**: App works with native Cocoa text fields (TextEdit, Notes, Mail)
+- [x] **COMPAT-02**: App works with browser text areas (Safari, Chrome, Firefox)
 - [x] **COMPAT-03**: App handles timing delays between simulated keystrokes (100-150ms between Cmd+A and Cmd+C)
 
 ## v2 Requirements
@@ -121,8 +121,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MENU-03 | Phase 1 | Complete |
 | MENU-04 | Phase 1 | Complete |
 | CONF-01 | Phase 6 | Pending |
-| COMPAT-01 | Phase 3 | Pending |
-| COMPAT-02 | Phase 3 | Pending |
+| COMPAT-01 | Phase 3 | Complete |
+| COMPAT-02 | Phase 3 | Complete |
 | COMPAT-03 | Phase 3 | Complete |
 
 **Coverage:**
