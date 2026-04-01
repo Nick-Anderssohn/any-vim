@@ -45,7 +45,10 @@ Plans:
   1. Double-tapping Control within ~350ms fires the trigger while the user is in any application (browser, native app, terminal)
   2. Single Control taps, held Control, and Ctrl+other-key combinations do not trigger the app
   3. The event tap continues functioning after the app has been running for an extended period (no silent tap death)
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 02-01-PLAN.md — HotkeyManager with CGEventTap, double-tap state machine, tap health monitor, and unit tests
+- [ ] 02-02-PLAN.md — Wire HotkeyManager into AppDelegate and MenuBarController, manual verification
 
 ### Phase 3: Accessibility Bridge and Clipboard
 **Goal**: The app can grab text from any focused text field and paste edited text back, leaving the user's clipboard exactly as it was before the trigger
@@ -99,7 +102,7 @@ Note: Phases 3 and 4 are independent of each other and may be planned/built in p
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. App Shell and Permissions | 2/3 | In Progress|  |
-| 2. Global Hotkey Detection | 0/? | Not started | - |
+| 2. Global Hotkey Detection | 0/2 | Not started | - |
 | 3. Accessibility Bridge and Clipboard | 0/? | Not started | - |
 | 4. Vim Session | 0/? | Not started | - |
 | 5. Edit Cycle Integration | 0/? | Not started | - |
