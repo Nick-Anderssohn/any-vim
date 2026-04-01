@@ -22,7 +22,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Text Capture
 
 - [x] **CAPT-01**: On trigger, app saves the current clipboard contents (all pasteboard types) for later restoration
-- [ ] **CAPT-02**: App sends Cmd+A, Cmd+C to the focused application via CGEvent to grab text field contents
+- [x] **CAPT-02**: App sends Cmd+A, Cmd+C to the focused application via CGEvent to grab text field contents
 - [x] **CAPT-03**: App reads the grabbed text from the clipboard and writes it to a temporary file
 - [x] **CAPT-04**: App handles the case where the focused field is empty (empty temp file)
 
@@ -56,7 +56,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **COMPAT-01**: App works with native Cocoa text fields (TextEdit, Notes, Mail)
 - [ ] **COMPAT-02**: App works with browser text areas (Safari, Chrome, Firefox)
-- [ ] **COMPAT-03**: App handles timing delays between simulated keystrokes (100-150ms between Cmd+A and Cmd+C)
+- [x] **COMPAT-03**: App handles timing delays between simulated keystrokes (100-150ms between Cmd+A and Cmd+C)
 
 ## v2 Requirements
 
@@ -104,7 +104,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PERM-02 | Phase 1 | Complete |
 | PERM-03 | Phase 1 | Complete |
 | CAPT-01 | Phase 3 | Complete |
-| CAPT-02 | Phase 3 | Pending |
+| CAPT-02 | Phase 3 | Complete |
 | CAPT-03 | Phase 3 | Complete |
 | CAPT-04 | Phase 3 | Complete |
 | VIM-01 | Phase 4 | Pending |
@@ -123,7 +123,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONF-01 | Phase 6 | Pending |
 | COMPAT-01 | Phase 3 | Pending |
 | COMPAT-02 | Phase 3 | Pending |
-| COMPAT-03 | Phase 3 | Pending |
+| COMPAT-03 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 27 total
