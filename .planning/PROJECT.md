@@ -17,14 +17,14 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 ### Active
 
 - [x] System-wide double-tap Control key detection to trigger vim — Validated in Phase 2: Global Hotkey Detection
-- [ ] Grab existing text from the focused text field (Cmd+A, Cmd+C via Accessibility APIs)
-- [ ] Write grabbed text to a temporary file
+- [x] Grab existing text from the focused text field (Cmd+A, Cmd+C via Accessibility APIs) — Validated in Phase 3: Accessibility Bridge and Clipboard
+- [x] Write grabbed text to a temporary file — Validated in Phase 3: Accessibility Bridge and Clipboard
 - [ ] Launch vim in a terminal window with the temp file
 - [ ] On :wq, read the edited temp file contents
-- [ ] Paste edited text back into the original text field (Cmd+A, Cmd+V via Accessibility APIs)
+- [x] Paste edited text back into the original text field (Cmd+A, Cmd+V via Accessibility APIs) — Validated in Phase 3: Accessibility Bridge and Clipboard
 - [ ] Clean up temporary file after paste
 - [ ] Small, fast-launching binary
-- [ ] Preserve clipboard — restore the user's original clipboard contents after the edit cycle
+- [x] Preserve clipboard — restore the user's original clipboard contents after the edit cycle — Validated in Phase 3: Accessibility Bridge and Clipboard
 
 ### Out of Scope
 
@@ -58,8 +58,8 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 | Swift over Go | Accessibility APIs, global event taps, AppKit menu bar — all native Swift. Go would require extensive, fragile FFI bridging | Confirmed in Phase 1 |
 | No-storyboard menu bar app | Pure code setup via static func main() — NSPrincipalClass alone doesn't wire delegate without nib | Established in Phase 1 |
 | Developer signing required from Phase 1 | TCC won't register ad-hoc signed apps in privacy settings | Confirmed in Phase 1 |
-| Temp file for vim I/O | Vim naturally writes to files on :wq. Simpler and more reliable than trying to capture vim's stdout or use IPC | — Pending |
-| Cmd+A/Cmd+C/Cmd+V for text field interaction | Standard macOS way to interact with text fields in other apps via Accessibility. Works across virtually all apps | — Pending |
+| Temp file for vim I/O | Vim naturally writes to files on :wq. Simpler and more reliable than trying to capture vim's stdout or use IPC | Confirmed in Phase 3 |
+| Cmd+A/Cmd+C/Cmd+V for text field interaction | Standard macOS way to interact with text fields in other apps via Accessibility. Works across virtually all apps | Confirmed in Phase 3 |
 
 ## Evolution
 
@@ -79,4 +79,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-31 after Phase 2 completion*
+*Last updated: 2026-04-01 after Phase 3 completion*
