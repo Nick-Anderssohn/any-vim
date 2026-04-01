@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-04-01T03:53:49.172Z"
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-04-01T04:00:51.184Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-31)
 ## Current Position
 
 Phase: 01 (app-shell-and-permissions) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-04-01
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-app-shell-and-permissions P01 | 12 | 2 tasks | 6 files |
+| Phase 01-app-shell-and-permissions P02 | 8 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Recent decisions affecting current work:
 - [Phase 01-app-shell-and-permissions]: NSStatusItem held as AppDelegate instance property to prevent premature ARC release (menu bar icon vanishing)
 - [Phase 01-app-shell-and-permissions]: MenuBarController.buildMenu() stateless for Plan 01; Plan 02 injects PermissionManager and LoginItemManager for live state
 - [Phase 01-app-shell-and-permissions]: Swift 6 language mode with SWIFT_STRICT_CONCURRENCY=complete from first commit per CLAUDE.md guidance
+- [Phase 01-app-shell-and-permissions]: PermissionChecking protocol extended with open-settings methods to keep MenuBarController fully protocol-typed (no concrete cast needed)
+- [Phase 01-app-shell-and-permissions]: MockLoginItemService implements first-run logic in-memory for hermetic tests with no real UserDefaults mutation
 
 ### Pending Todos
 
@@ -79,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T03:53:49.170Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-04-01T04:00:51.182Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
