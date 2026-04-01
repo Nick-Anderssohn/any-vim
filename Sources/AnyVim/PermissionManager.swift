@@ -8,6 +8,8 @@ import AppKit
 protocol PermissionChecking {
     var isAccessibilityGranted: Bool { get }
     var isInputMonitoringGranted: Bool { get }
+    func openAccessibilitySettings()
+    func openInputMonitoringSettings()
 }
 
 // MARK: - PermissionManager

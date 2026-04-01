@@ -2,38 +2,72 @@ import AppKit
 
 final class MenuBarController {
 
+    // MARK: - Dependencies (protocol types for testability)
+
+    private let permissionManager: PermissionChecking
+    private let loginItemManager: LoginItemManaging
+
+    // MARK: - Init
+
+    init(permissionManager: PermissionChecking, loginItemManager: LoginItemManaging) {
+        self.permissionManager = permissionManager
+        self.loginItemManager = loginItemManager
+    }
+
+    // MARK: - Menu construction
+
+    /// Build the full menu with live permission and login-item state.
+    ///
+    /// Called fresh on each menu open (or on permission change callback) so all
+    /// values reflect the current OS state — no caching.
     func buildMenu() -> NSMenu {
         let menu = NSMenu()
 
-        // Permission status items (D-03) — placeholder titles for Plan 01
-        // Plan 02 will wire live AXIsProcessTrusted() / CGPreflightListenEventAccess() values
-        let axItem = NSMenuItem(
-            title: "Accessibility: Not Granted — Click to Enable",
-            action: nil,
-            keyEquivalent: ""
-        )
-        menu.addItem(axItem)
+        // --- Permission status items (D-03) ---
 
-        let imItem = NSMenuItem(
-            title: "Input Monitoring: Not Granted — Click to Enable",
-            action: nil,
-            keyEquivalent: ""
-        )
-        menu.addItem(imItem)
+        if permissionManager.isAccessibilityGranted {
+            let item = NSMenuItem(title: "Accessibility: Granted", action: nil, keyEquivalent: "")
+            menu.addItem(item)
+        } else {
+            let item = NSMenuItem(
+                title: "Accessibility: Not Granted \u{2014} Click to Enable",
+                action: #selector(openAccessibilitySettings),
+                keyEquivalent: ""
+            )
+            item.target = self
+            menu.addItem(item)
+        }
+
+        if permissionManager.isInputMonitoringGranted {
+            let item = NSMenuItem(title: "Input Monitoring: Granted", action: nil, keyEquivalent: "")
+            menu.addItem(item)
+        } else {
+            let item = NSMenuItem(
+                title: "Input Monitoring: Not Granted \u{2014} Click to Enable",
+                action: #selector(openInputMonitoringSettings),
+                keyEquivalent: ""
+            )
+            item.target = self
+            menu.addItem(item)
+        }
 
         menu.addItem(NSMenuItem.separator())
 
-        // Launch at Login toggle placeholder — Plan 02 will wire SMAppService
+        // --- Launch at Login toggle (D-09) ---
+
         let loginItem = NSMenuItem(
             title: "Launch at Login",
-            action: nil,
+            action: #selector(toggleLaunchAtLogin),
             keyEquivalent: ""
         )
+        loginItem.target = self
+        loginItem.state = loginItemManager.isEnabled ? .on : .off
         menu.addItem(loginItem)
 
         menu.addItem(NSMenuItem.separator())
 
-        // Quit AnyVim (MENU-03)
+        // --- Quit (MENU-03) ---
+
         let quitItem = NSMenuItem(
             title: "Quit AnyVim",
             action: #selector(NSApplication.terminate(_:)),
@@ -44,8 +78,22 @@ final class MenuBarController {
         return menu
     }
 
-    /// Called when permission state changes (Plan 02 will implement live updates)
-    func updateMenu() {
-        // Stub: Plan 02 will rebuild menu with live permission state
+    // MARK: - Actions
+
+    @objc private func openAccessibilitySettings() {
+        permissionManager.openAccessibilitySettings()
+    }
+
+    @objc private func openInputMonitoringSettings() {
+        permissionManager.openInputMonitoringSettings()
+    }
+
+    @objc private func toggleLaunchAtLogin() {
+        if loginItemManager.isEnabled {
+            loginItemManager.disable()
+        } else {
+            loginItemManager.enable()
+        }
+        // Menu checkmark updates on next open — buildMenu() reads live state
     }
 }
