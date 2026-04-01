@@ -20,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var notificationManager: NotificationManager!
     private var hotkeyManager: HotkeyManager!
     private var menuBarController: MenuBarController!
+    private var accessibilityBridge: AccessibilityBridge!
 
     // MARK: - Launch
 
@@ -48,6 +49,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Enable launch at login on first run (D-07)
         loginItemManager.enableIfFirstRun()
+
+        // Create AccessibilityBridge (Phase 3: captures text on hotkey trigger)
+        accessibilityBridge = AccessibilityBridge(permissionChecker: permissionManager)
 
         // Create and wire HotkeyManager (D-06: install immediately if permissions already granted)
         hotkeyManager = HotkeyManager()
@@ -116,9 +120,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Hotkey trigger
 
-    /// Placeholder handler for the hotkey trigger. Full edit-cycle wiring comes in Phase 5.
     private func handleHotkeyTrigger() {
-        print("[AnyVim] Hotkey triggered!")
+        Task { @MainActor in
+            guard let result = await accessibilityBridge.captureText() else {
+                // Capture failed — show alert per UI-SPEC
+                showCaptureFailureAlert()
+                return
+            }
+            // Phase 3: capture only — log the temp file path.
+            // Phase 4 will open vim with result.tempFileURL.
+            // Phase 5 will wire the full cycle.
+            print("[AnyVim] Text captured to: \(result.tempFileURL.path)")
+            print("[AnyVim] Original app: \(result.originalApp.localizedName ?? "unknown")")
+            // NOTE: In Phase 3, we don't have vim yet, so clean up immediately.
+            // This cleanup will move to Phase 5 when the full cycle is wired.
+            accessibilityBridge.abortAndRestore(captureResult: result)
+        }
+    }
+
+    /// Show alert when text capture fails (accessibility permission missing or no frontmost app).
+    private func showCaptureFailureAlert() {
+        let alert = NSAlert()
+        alert.messageText = "Text Capture Failed"
+        alert.informativeText = "AnyVim could not read the text in the focused field. Make sure Accessibility permission is granted, then try again."
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Dismiss")
+        alert.runModal()
     }
 
     // MARK: - Permission alerts
