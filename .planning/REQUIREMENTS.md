@@ -21,10 +21,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Text Capture
 
-- [ ] **CAPT-01**: On trigger, app saves the current clipboard contents (all pasteboard types) for later restoration
+- [x] **CAPT-01**: On trigger, app saves the current clipboard contents (all pasteboard types) for later restoration
 - [ ] **CAPT-02**: App sends Cmd+A, Cmd+C to the focused application via CGEvent to grab text field contents
-- [ ] **CAPT-03**: App reads the grabbed text from the clipboard and writes it to a temporary file
-- [ ] **CAPT-04**: App handles the case where the focused field is empty (empty temp file)
+- [x] **CAPT-03**: App reads the grabbed text from the clipboard and writes it to a temporary file
+- [x] **CAPT-04**: App handles the case where the focused field is empty (empty temp file)
 
 ### Vim Session
 
@@ -103,10 +103,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PERM-01 | Phase 1 | Complete |
 | PERM-02 | Phase 1 | Complete |
 | PERM-03 | Phase 1 | Complete |
-| CAPT-01 | Phase 3 | Pending |
+| CAPT-01 | Phase 3 | Complete |
 | CAPT-02 | Phase 3 | Pending |
-| CAPT-03 | Phase 3 | Pending |
-| CAPT-04 | Phase 3 | Pending |
+| CAPT-03 | Phase 3 | Complete |
+| CAPT-04 | Phase 3 | Complete |
 | VIM-01 | Phase 4 | Pending |
 | VIM-02 | Phase 4 | Pending |
 | VIM-03 | Phase 4 | Pending |
