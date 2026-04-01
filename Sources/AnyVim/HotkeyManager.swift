@@ -24,8 +24,11 @@ struct SystemTapInstaller: TapInstalling {
         callback: @escaping CGEventTapCallBack,
         userInfo: UnsafeMutableRawPointer?
     ) -> CFMachPort? {
-        // Listen to flagsChanged events only — these fire on modifier key state changes
+        // Listen to flagsChanged (modifier keys) and keyDown (regular keys).
+        // keyDown is needed to detect intervening non-modifier keys (D-04: Ctrl+C then tap
+        // Control should NOT trigger, because the C keyDown resets the state machine).
         let eventMask = CGEventMask(1 << CGEventType.flagsChanged.rawValue)
+            | CGEventMask(1 << CGEventType.keyDown.rawValue)
             | CGEventMask(1 << CGEventType.tapDisabledByTimeout.rawValue)
             | CGEventMask(1 << CGEventType.tapDisabledByUserInput.rawValue)
         return CGEvent.tapCreate(
@@ -207,6 +210,12 @@ final class HotkeyManager: HotkeyManaging {
         }
     }
 
+    /// A non-modifier key was pressed while the state machine was active.
+    /// Reset to idle — this prevents Ctrl+C followed by quick Control tap from triggering (D-04).
+    func handleKeyDown() {
+        state = .idle
+    }
+
     /// Handle a disabled-tap event. Called on the main queue.
     func handleTapDisabled() {
         guard let tap = eventTap else { return }
@@ -314,6 +323,13 @@ private func hotkeyEventTapCallback(
         let keycode = Int(event.getIntegerValueField(.keyboardEventKeycode))
         DispatchQueue.main.async {
             manager.handleFlagsChanged(flags: flags, keycode: keycode)
+        }
+
+    case .keyDown:
+        // Any non-modifier keypress resets the double-tap state machine (D-04).
+        // This catches Ctrl+C → quick Control tap, which would otherwise false-positive.
+        DispatchQueue.main.async {
+            manager.handleKeyDown()
         }
 
     default:

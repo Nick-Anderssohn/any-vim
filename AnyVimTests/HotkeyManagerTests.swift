@@ -148,6 +148,22 @@ final class HotkeyManagerTests: XCTestCase {
         XCTAssertEqual(triggerCount, 0, "onTrigger should NOT fire when an intervening non-Control key is pressed")
     }
 
+    func testCtrlKeyComboThenQuickTapDoesNotFire() {
+        var triggerCount = 0
+        manager.onTrigger = { triggerCount += 1 }
+
+        // Ctrl+C sequence: Control down, C keyDown (resets state), Control up
+        manager.handleFlagsChanged(flags: .maskControl, keycode: kVKControl)
+        manager.handleKeyDown()  // simulates the "C" keyDown event
+        manager.handleFlagsChanged(flags: CGEventFlags(rawValue: 0), keycode: kVKControl)
+
+        // Quick Control tap after — should NOT count as second tap because state was reset
+        manager.handleFlagsChanged(flags: .maskControl, keycode: kVKControl)
+        manager.handleFlagsChanged(flags: CGEventFlags(rawValue: 0), keycode: kVKControl)
+
+        XCTAssertEqual(triggerCount, 0, "Ctrl+C then quick Control tap should NOT fire (D-04: intervening keyDown resets state)")
+    }
+
     func testLeftAndRightControlFireTrigger() {
         var triggerCount = 0
         manager.onTrigger = { triggerCount += 1 }
