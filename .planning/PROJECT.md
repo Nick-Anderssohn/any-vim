@@ -16,7 +16,7 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 
 ### Active
 
-- [ ] System-wide double-tap Control key detection to trigger vim
+- [x] System-wide double-tap Control key detection to trigger vim — Validated in Phase 2: Global Hotkey Detection
 - [ ] Grab existing text from the focused text field (Cmd+A, Cmd+C via Accessibility APIs)
 - [ ] Write grabbed text to a temporary file
 - [ ] Launch vim in a terminal window with the temp file
@@ -79,4 +79,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-31 after Phase 1 completion*
+*Last updated: 2026-03-31 after Phase 2 completion*
