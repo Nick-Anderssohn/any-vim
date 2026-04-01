@@ -15,9 +15,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Permissions
 
-- [ ] **PERM-01**: App checks for Accessibility permission on launch and displays guidance if not granted
-- [ ] **PERM-02**: App checks for Input Monitoring permission on launch and displays guidance if not granted
-- [ ] **PERM-03**: App re-checks permission state periodically and updates status accordingly
+- [x] **PERM-01**: App checks for Accessibility permission on launch and displays guidance if not granted
+- [x] **PERM-02**: App checks for Input Monitoring permission on launch and displays guidance if not granted
+- [x] **PERM-03**: App re-checks permission state periodically and updates status accordingly
 
 ### Text Capture
 
@@ -46,7 +46,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **MENU-01**: App runs as a menu bar app with a status icon (no dock icon)
 - [ ] **MENU-02**: Menu bar icon animates or changes while a vim session is active
 - [x] **MENU-03**: Menu includes a Quit option
-- [ ] **MENU-04**: App launches at login (optional, configurable)
+- [x] **MENU-04**: App launches at login (optional, configurable)
 
 ### Configuration
 
@@ -100,9 +100,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HOTKEY-01 | Phase 2 | Pending |
 | HOTKEY-02 | Phase 2 | Pending |
 | HOTKEY-03 | Phase 2 | Pending |
-| PERM-01 | Phase 1 | Pending |
-| PERM-02 | Phase 1 | Pending |
-| PERM-03 | Phase 1 | Pending |
+| PERM-01 | Phase 1 | Complete |
+| PERM-02 | Phase 1 | Complete |
+| PERM-03 | Phase 1 | Complete |
 | CAPT-01 | Phase 3 | Pending |
 | CAPT-02 | Phase 3 | Pending |
 | CAPT-03 | Phase 3 | Pending |
@@ -119,7 +119,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MENU-01 | Phase 1 | Complete |
 | MENU-02 | Phase 6 | Pending |
 | MENU-03 | Phase 1 | Complete |
-| MENU-04 | Phase 1 | Pending |
+| MENU-04 | Phase 1 | Complete |
 | CONF-01 | Phase 6 | Pending |
 | COMPAT-01 | Phase 3 | Pending |
 | COMPAT-02 | Phase 3 | Pending |
