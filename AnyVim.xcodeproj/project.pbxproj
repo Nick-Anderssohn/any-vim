@@ -10,6 +10,11 @@
 		A1000001 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000001 /* AppDelegate.swift */; };
 		A1000002 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000002 /* MenuBarController.swift */; };
 		A1000003 /* MenuBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000003 /* MenuBarControllerTests.swift */; };
+		A1000004 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000006 /* PermissionManager.swift */; };
+		A1000005 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000007 /* LoginItemManager.swift */; };
+		A1000006 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000008 /* NotificationManager.swift */; };
+		A1000007 /* PermissionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000009 /* PermissionManagerTests.swift */; };
+		A1000008 /* LoginItemManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010 /* LoginItemManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +23,11 @@
 		A2000003 /* MenuBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarControllerTests.swift; sourceTree = "<group>"; };
 		A2000004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2000005 /* AnyVim.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AnyVim.entitlements; sourceTree = "<group>"; };
+		A2000006 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		A2000007 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
+		A2000008 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		A2000009 /* PermissionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManagerTests.swift; sourceTree = "<group>"; };
+		A2000010 /* LoginItemManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManagerTests.swift; sourceTree = "<group>"; };
 		A3000001 /* AnyVim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyVim.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3000002 /* AnyVimTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnyVimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -55,6 +65,9 @@
 			children = (
 				A2000001 /* AppDelegate.swift */,
 				A2000002 /* MenuBarController.swift */,
+				A2000006 /* PermissionManager.swift */,
+				A2000007 /* LoginItemManager.swift */,
+				A2000008 /* NotificationManager.swift */,
 			);
 			name = Sources;
 			path = Sources/AnyVim;
@@ -74,6 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				A2000003 /* MenuBarControllerTests.swift */,
+				A2000009 /* PermissionManagerTests.swift */,
+				A2000010 /* LoginItemManagerTests.swift */,
 			);
 			name = AnyVimTests;
 			path = AnyVimTests;
@@ -180,6 +195,9 @@
 			files = (
 				A1000001 /* AppDelegate.swift in Sources */,
 				A1000002 /* MenuBarController.swift in Sources */,
+				A1000004 /* PermissionManager.swift in Sources */,
+				A1000005 /* LoginItemManager.swift in Sources */,
+				A1000006 /* NotificationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +206,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1000003 /* MenuBarControllerTests.swift in Sources */,
+				A1000007 /* PermissionManagerTests.swift in Sources */,
+				A1000008 /* LoginItemManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
