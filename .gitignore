@@ -1,0 +1,21 @@
+.private
+
+# Xcode user-specific files
+AnyVim.xcodeproj/project.xcworkspace/
+AnyVim.xcodeproj/xcuserdata/
+xcuserdata/
+
+# Build products
+build/
+DerivedData/
+
+# Code coverage
+*.profraw
+*.profdata
+
+# OS files
+.DS_Store
+
+# Swift Package Manager
+.build/
+.swiftpm/
