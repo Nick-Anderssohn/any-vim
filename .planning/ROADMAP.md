@@ -45,9 +45,9 @@ Plans:
   1. Double-tapping Control within ~350ms fires the trigger while the user is in any application (browser, native app, terminal)
   2. Single Control taps, held Control, and Ctrl+other-key combinations do not trigger the app
   3. The event tap continues functioning after the app has been running for an extended period (no silent tap death)
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
-- [ ] 02-01-PLAN.md — HotkeyManager with CGEventTap, double-tap state machine, tap health monitor, and unit tests
+- [x] 02-01-PLAN.md — HotkeyManager with CGEventTap, double-tap state machine, tap health monitor, and unit tests
 - [ ] 02-02-PLAN.md — Wire HotkeyManager into AppDelegate and MenuBarController, manual verification
 
 ### Phase 3: Accessibility Bridge and Clipboard
