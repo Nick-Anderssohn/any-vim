@@ -101,7 +101,10 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. The menu bar icon changes visually while a vim session is active and returns to its default state when the session ends
   2. The user can configure a custom vim binary path, and the app uses that binary on subsequent triggers
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 06-01-PLAN.md — UserDefaultsVimPathResolver, icon swap in handleHotkeyTrigger, vim path menu items, unit tests
+- [ ] 06-02-PLAN.md — Manual verification of icon swap and vim path configuration
 
 ## Progress
 
@@ -116,4 +119,4 @@ Note: Phases 3 and 4 are independent of each other and may be planned/built in p
 | 3. Accessibility Bridge and Clipboard | 2/3 | In Progress|  |
 | 4. Vim Session | 2/2 | Complete   | 2026-04-02 |
 | 5. Edit Cycle Integration | 2/2 | Complete   | 2026-04-02 |
-| 6. Polish and Configuration | 0/? | Not started | - |
+| 6. Polish and Configuration | 0/2 | Not started | - |
