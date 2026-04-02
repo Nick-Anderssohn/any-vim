@@ -268,6 +268,8 @@ final class VimSessionManager: NSObject {
     }
 }
 
+extension VimSessionManager: VimSessionOpening {}
+
 // MARK: - LocalProcessTerminalViewDelegate
 
 extension VimSessionManager: LocalProcessTerminalViewDelegate {

@@ -20,8 +20,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var notificationManager: NotificationManager!
     private var hotkeyManager: HotkeyManager!
     private var menuBarController: MenuBarController!
-    private var accessibilityBridge: AccessibilityBridge!
-    private var vimSessionManager: VimSessionManager!
+    var accessibilityBridge: (any TextCapturing)!
+    var vimSessionManager: (any VimSessionOpening)!
+
+    /// Re-entrancy guard — prevents a second trigger while vim is open (D-01, D-02).
+    var isEditSessionActive = false
 
     // MARK: - Launch
 
@@ -124,28 +127,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - Hotkey trigger
 
-    private func handleHotkeyTrigger() {
+    func handleHotkeyTrigger() {
         Task { @MainActor in
+            // D-01: silent swallow if session already active
+            guard !isEditSessionActive else { return }
+            isEditSessionActive = true
+            // D-02: defer ensures reset on ALL exit paths (including captureText failure)
+            defer { isEditSessionActive = false }
+
             guard let result = await accessibilityBridge.captureText() else {
-                // Capture failed — show alert per UI-SPEC
                 showCaptureFailureAlert()
                 return
             }
 
-            // Phase 4: Open vim with captured text
             let exitResult = await vimSessionManager.openVimSession(tempFileURL: result.tempFileURL)
 
-            // Phase 4: Log exit result. Phase 5 will wire paste-back and cleanup.
             switch exitResult {
             case .saved:
-                print("[AnyVim] Vim session completed: saved")
-            case .aborted:
-                print("[AnyVim] Vim session completed: aborted")
-            }
+                // REST-01: read edited file content
+                if let editedContent = try? String(contentsOf: result.tempFileURL, encoding: .utf8) {
+                    // REST-01, REST-02: paste edited text back to original app
+                    await accessibilityBridge.restoreText(editedContent, captureResult: result)
+                    // REST-05: delete temp file (restoreText does not delete)
+                    TempFileManager().deleteTempFile(at: result.tempFileURL)
+                } else {
+                    // D-03, D-04: read failure — treat as abort, no user alert
+                    accessibilityBridge.abortAndRestore(captureResult: result)
+                }
 
-            // NOTE: Phase 4 still uses abortAndRestore for ALL exits.
-            // Phase 5 will read the edited file on .saved and call restoreText().
-            accessibilityBridge.abortAndRestore(captureResult: result)
+            case .aborted:
+                // REST-03: skip paste-back
+                // REST-04, REST-05: abortAndRestore restores clipboard and deletes temp file
+                accessibilityBridge.abortAndRestore(captureResult: result)
+            }
         }
     }
 

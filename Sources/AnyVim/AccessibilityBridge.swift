@@ -147,3 +147,5 @@ final class AccessibilityBridge {
         tempFileManager.deleteTempFile(at: captureResult.tempFileURL)
     }
 }
+
+extension AccessibilityBridge: TextCapturing {}

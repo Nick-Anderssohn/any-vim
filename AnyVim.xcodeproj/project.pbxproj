@@ -28,6 +28,8 @@
 		A1000018 /* VimPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000020 /* VimPanel.swift */; };
 		A1000019 /* VimSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000021 /* VimSessionManager.swift */; };
 		A1000020 /* VimSessionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000022 /* VimSessionManagerTests.swift */; };
+		A1000021 /* EditCycleCoordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000023 /* EditCycleCoordinating.swift */; };
+		A1000022 /* EditCycleCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000024 /* EditCycleCoordinatorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		A2000020 /* VimPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimPanel.swift; sourceTree = "<group>"; };
 		A2000021 /* VimSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimSessionManager.swift; sourceTree = "<group>"; };
 		A2000022 /* VimSessionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimSessionManagerTests.swift; sourceTree = "<group>"; };
+		A2000023 /* EditCycleCoordinating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCycleCoordinating.swift; sourceTree = "<group>"; };
+		A2000024 /* EditCycleCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCycleCoordinatorTests.swift; sourceTree = "<group>"; };
 		A3000001 /* AnyVim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyVim.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3000002 /* AnyVimTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AnyVimTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -111,6 +115,7 @@
 				A2000018 /* AccessibilityBridge.swift */,
 				A2000020 /* VimPanel.swift */,
 				A2000021 /* VimSessionManager.swift */,
+				A2000023 /* EditCycleCoordinating.swift */,
 			);
 			name = Sources;
 			path = Sources/AnyVim;
@@ -136,6 +141,7 @@
 				A2000017 /* TempFileManagerTests.swift */,
 				A2000019 /* AccessibilityBridgeTests.swift */,
 				A2000022 /* VimSessionManagerTests.swift */,
+				A2000024 /* EditCycleCoordinatorTests.swift */,
 			);
 			path = AnyVimTests;
 			sourceTree = "<group>";
@@ -254,6 +260,7 @@
 				A1000016 /* AccessibilityBridge.swift in Sources */,
 				A1000018 /* VimPanel.swift in Sources */,
 				A1000019 /* VimSessionManager.swift in Sources */,
+				A1000021 /* EditCycleCoordinating.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +276,7 @@
 				A1000015 /* TempFileManagerTests.swift in Sources */,
 				A1000017 /* AccessibilityBridgeTests.swift in Sources */,
 				A1000020 /* VimSessionManagerTests.swift in Sources */,
+				A1000022 /* EditCycleCoordinatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
