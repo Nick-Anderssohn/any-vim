@@ -104,7 +104,7 @@ Plans:
 **Plans:** 1/2 plans executed
 Plans:
 - [x] 06-01-PLAN.md — UserDefaultsVimPathResolver, icon swap in handleHotkeyTrigger, vim path menu items, unit tests
-- [ ] 06-02-PLAN.md — Manual verification of icon swap and vim path configuration
+- [x] 06-02-PLAN.md — Manual verification of icon swap and vim path configuration
 
 ## Progress
 
