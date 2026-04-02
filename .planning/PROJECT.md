@@ -25,6 +25,8 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 - [x] Clean up temporary file after paste — Validated in Phase 5: Edit Cycle Integration
 - [ ] Small, fast-launching binary
 - [x] Preserve clipboard — restore the user's original clipboard contents after the edit cycle — Validated in Phase 3: Accessibility Bridge and Clipboard
+- [x] Visual session indicator — menu bar icon changes during active vim session — Validated in Phase 6: Polish and Configuration
+- [x] Configurable vim path — user can point to a non-default vim binary — Validated in Phase 6: Polish and Configuration
 
 ### Out of Scope
 
@@ -64,6 +66,8 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 | Mtime-based exit detection | Compare file modification date before/after vim runs. :wq changes mtime (saved), :q! does not (aborted). Exit code is unreliable (0 for both) | Confirmed in Phase 4 |
 | NSPanel with hidesOnDeactivate=false | Floating panel stays visible when user clicks other apps. NSPanel defaults hidesOnDeactivate to true which hides the window | Confirmed in Phase 4 |
 | Strip trailing newline after :wq | Vim always appends a trailing newline on save. Trimming before paste-back prevents an extra blank line in the target text field | Confirmed in Phase 5 |
+| Composing resolver for vim path | UserDefaultsVimPathResolver wraps ShellVimPathResolver — checks UserDefaults first, falls back silently on invalid/missing custom path | Confirmed in Phase 6 |
+| Static "Vim: (default)" in menu | Avoid calling ShellVimPathResolver on main thread during menu build (100-300ms block). Show static label, resolve at trigger time | Confirmed in Phase 6 |
 
 ## Evolution
 
@@ -83,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-02 after Phase 5 completion*
+*Last updated: 2026-04-02 after Phase 6 completion*
