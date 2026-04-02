@@ -146,8 +146,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             case .saved:
                 // REST-01: read edited file content
                 if let editedContent = try? String(contentsOf: result.tempFileURL, encoding: .utf8) {
+                    // Vim always appends a trailing newline on :wq — strip it so the
+                    // pasted text matches what the user actually typed.
+                    let trimmed = editedContent.replacingOccurrences(of: "\\n+$", with: "", options: .regularExpression)
                     // REST-01, REST-02: paste edited text back to original app
-                    await accessibilityBridge.restoreText(editedContent, captureResult: result)
+                    await accessibilityBridge.restoreText(trimmed, captureResult: result)
                     // REST-05: delete temp file (restoreText does not delete)
                     TempFileManager().deleteTempFile(at: result.tempFileURL)
                 } else {
