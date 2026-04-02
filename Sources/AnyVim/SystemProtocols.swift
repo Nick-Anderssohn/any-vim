@@ -87,3 +87,59 @@ struct SystemAppActivator: AppActivating {
         app.activate(options: [])
     }
 }
+
+// MARK: - VimPathResolving
+
+/// Abstraction over vim binary resolution for testability.
+protocol VimPathResolving {
+    /// Resolve the path to the vim binary in the user's shell PATH.
+    /// Returns nil if vim is not found.
+    func resolveVimPath() -> String?
+}
+
+// MARK: - FileModificationDateReading
+
+/// Abstraction over file modification date reading for testability.
+protocol FileModificationDateReading {
+    /// Read the modification date of a file at the given URL.
+    /// Returns nil if the file does not exist or is unreadable.
+    func modificationDate(of url: URL) -> Date?
+}
+
+// MARK: - ShellVimPathResolver
+
+/// Production implementation: resolves vim via a login shell subprocess.
+///
+/// Uses `/bin/zsh -l -c "which vim"` to honor the user's full shell PATH,
+/// including Homebrew paths (D-08). macOS GUI apps inherit a minimal launchd PATH
+/// that omits `/opt/homebrew/bin` — the login shell flag `-l` fixes this.
+struct ShellVimPathResolver: VimPathResolving {
+    func resolveVimPath() -> String? {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/zsh")
+        process.arguments = ["-l", "-c", "which vim"]
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        process.standardError = Pipe()  // discard stderr
+        do {
+            try process.run()
+        } catch {
+            return nil
+        }
+        process.waitUntilExit()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let path = String(data: data, encoding: .utf8)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return (path?.isEmpty == false) ? path : nil
+    }
+}
+
+// MARK: - SystemFileModificationDateReader
+
+/// Production implementation: reads file modification date via FileManager.
+struct SystemFileModificationDateReader: FileModificationDateReading {
+    func modificationDate(of url: URL) -> Date? {
+        let attrs = try? FileManager.default.attributesOfItem(atPath: url.path)
+        return attrs?[FileAttributeKey.modificationDate] as? Date
+    }
+}
