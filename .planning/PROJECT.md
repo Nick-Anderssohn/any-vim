@@ -12,44 +12,51 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 
 ### Validated
 
-- [x] Menu bar app with status icon that runs in the background — Validated in Phase 1: App Shell and Permissions
+- ✓ Menu bar app with status icon that runs in the background — v1.0
+- ✓ System-wide double-tap Control key detection to trigger vim — v1.0
+- ✓ Grab existing text from the focused text field (Cmd+A, Cmd+C via Accessibility APIs) — v1.0
+- ✓ Write grabbed text to a temporary file — v1.0
+- ✓ Launch vim in a terminal window with the temp file — v1.0
+- ✓ On :wq, read the edited temp file contents — v1.0
+- ✓ Paste edited text back into the original text field (Cmd+A, Cmd+V via Accessibility APIs) — v1.0
+- ✓ Clean up temporary file after paste — v1.0
+- ✓ Preserve clipboard — restore the user's original clipboard contents after the edit cycle — v1.0
+- ✓ Visual session indicator — menu bar icon changes during active vim session — v1.0
+- ✓ Configurable vim path — user can point to a non-default vim binary — v1.0
 
 ### Active
 
-- [x] System-wide double-tap Control key detection to trigger vim — Validated in Phase 2: Global Hotkey Detection
-- [x] Grab existing text from the focused text field (Cmd+A, Cmd+C via Accessibility APIs) — Validated in Phase 3: Accessibility Bridge and Clipboard
-- [x] Write grabbed text to a temporary file — Validated in Phase 3: Accessibility Bridge and Clipboard
-- [x] Launch vim in a terminal window with the temp file — Validated in Phase 4: Vim Session
-- [x] On :wq, read the edited temp file contents — Validated in Phase 4: Vim Session
-- [x] Paste edited text back into the original text field (Cmd+A, Cmd+V via Accessibility APIs) — Validated in Phase 3: Accessibility Bridge and Clipboard
-- [x] Clean up temporary file after paste — Validated in Phase 5: Edit Cycle Integration
 - [ ] Small, fast-launching binary
-- [x] Preserve clipboard — restore the user's original clipboard contents after the edit cycle — Validated in Phase 3: Accessibility Bridge and Clipboard
-- [x] Visual session indicator — menu bar icon changes during active vim session — Validated in Phase 6: Polish and Configuration
-- [x] Configurable vim path — user can point to a non-default vim binary — Validated in Phase 6: Polish and Configuration
+- [ ] Edit history in ~/.local/share/any-vim/ for recovery
+- [ ] File type hint via temp file extension based on context
+- [ ] Graceful Electron app support with fallback strategies
+- [ ] Custom hotkey configuration (beyond double-tap Control)
+- [ ] Neovim support as an alternative editor
 
 ### Out of Scope
 
-- Neovim/other editor support — vim only for v1
-- Custom key binding configuration — double-tap Control is hardcoded for v1
-- Linux/Windows support — macOS only
-- Plugin system or extensibility
-- Vim configuration management — uses the user's existing ~/.vimrc
+- Vim keybindings overlay (kindaVim-style) — different product category, AnyVim launches real vim
+- Browser extension (Firenvim-style) — extension maintenance burden; temp-file approach works across all apps
+- Plugin system / extensibility — no validated demand; premature generalization
+- Bundled vim binary — increases binary size; users already have vim on macOS
+- App Store distribution — Accessibility + Input Monitoring permissions incompatible with sandbox
+- Linux/Windows support — macOS-only APIs throughout
+- Vim config management — scope creep; vim uses ~/.vimrc automatically
+- Browser address bar support — too constrained for full text editing
 
 ## Context
 
-- macOS Accessibility APIs (CGEvent, AXUIElement) are required for global key monitoring and simulating keystrokes in other apps
-- These APIs are native Cocoa/AppKit, which strongly favors Swift over Go to avoid heavy FFI bridging
-- The app will need Accessibility permissions (System Preferences > Privacy > Accessibility)
-- The app will need Input Monitoring permissions for global keyboard events
-- Vim is assumed to be installed on the user's system (ships with macOS or via Homebrew)
-- The terminal window for vim should be a lightweight, purpose-built window — not a full Terminal.app launch
+Shipped v1.0 with 9,540 LOC Swift in 3 days.
+Tech stack: Swift 6, AppKit, CGEventTap, AXUIElement, SwiftTerm, SPM.
+All 27 v1 requirements validated. 67 unit tests passing.
+Tested in TextEdit, Notes, Safari, Chrome — native apps and browser text areas confirmed working.
+Menu bar daemon with no Dock icon, permission auto-detection, and launch-at-login support.
 
 ## Constraints
 
-- **Language**: Swift preferred — macOS Accessibility APIs, global event monitoring, and menu bar integration are all native AppKit/Cocoa APIs with no practical Go equivalent
+- **Language**: Swift — macOS Accessibility APIs, global event monitoring, and menu bar integration are all native AppKit/Cocoa APIs
 - **Platform**: macOS only (uses platform-specific APIs throughout)
-- **Permissions**: Requires Accessibility and Input Monitoring permissions — app must handle the case where these aren't granted
+- **Permissions**: Requires Accessibility and Input Monitoring permissions — app handles the case where these aren't granted
 - **Binary size**: Should be small — no heavy frameworks beyond what macOS provides
 - **Startup time**: Must launch quickly and stay lightweight in the background
 
@@ -57,17 +64,17 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Swift over Go | Accessibility APIs, global event taps, AppKit menu bar — all native Swift. Go would require extensive, fragile FFI bridging | Confirmed in Phase 1 |
-| No-storyboard menu bar app | Pure code setup via static func main() — NSPrincipalClass alone doesn't wire delegate without nib | Established in Phase 1 |
-| Developer signing required from Phase 1 | TCC won't register ad-hoc signed apps in privacy settings | Confirmed in Phase 1 |
-| Temp file for vim I/O | Vim naturally writes to files on :wq. Simpler and more reliable than trying to capture vim's stdout or use IPC | Confirmed in Phase 3 |
-| Cmd+A/Cmd+C/Cmd+V for text field interaction | Standard macOS way to interact with text fields in other apps via Accessibility. Works across virtually all apps | Confirmed in Phase 3 |
-| SwiftTerm for vim hosting | Embedded terminal emulator via LocalProcessTerminalView — proper PTY for vim with colors, cursor movement, raw mode. No Terminal.app dependency | Confirmed in Phase 4 |
-| Mtime-based exit detection | Compare file modification date before/after vim runs. :wq changes mtime (saved), :q! does not (aborted). Exit code is unreliable (0 for both) | Confirmed in Phase 4 |
-| NSPanel with hidesOnDeactivate=false | Floating panel stays visible when user clicks other apps. NSPanel defaults hidesOnDeactivate to true which hides the window | Confirmed in Phase 4 |
-| Strip trailing newline after :wq | Vim always appends a trailing newline on save. Trimming before paste-back prevents an extra blank line in the target text field | Confirmed in Phase 5 |
-| Composing resolver for vim path | UserDefaultsVimPathResolver wraps ShellVimPathResolver — checks UserDefaults first, falls back silently on invalid/missing custom path | Confirmed in Phase 6 |
-| Static "Vim: (default)" in menu | Avoid calling ShellVimPathResolver on main thread during menu build (100-300ms block). Show static label, resolve at trigger time | Confirmed in Phase 6 |
+| Swift over Go | Accessibility APIs, global event taps, AppKit menu bar — all native Swift. Go would require extensive, fragile FFI bridging | ✓ Good |
+| No-storyboard menu bar app | Pure code setup via static func main() — NSPrincipalClass alone doesn't wire delegate without nib | ✓ Good |
+| Developer signing required from Phase 1 | TCC won't register ad-hoc signed apps in privacy settings | ✓ Good |
+| Temp file for vim I/O | Vim naturally writes to files on :wq. Simpler and more reliable than trying to capture vim's stdout or use IPC | ✓ Good |
+| Cmd+A/Cmd+C/Cmd+V for text field interaction | Standard macOS way to interact with text fields in other apps via Accessibility. Works across virtually all apps | ✓ Good |
+| SwiftTerm for vim hosting | Embedded terminal emulator via LocalProcessTerminalView — proper PTY for vim with colors, cursor movement, raw mode. No Terminal.app dependency | ✓ Good |
+| Mtime-based exit detection | Compare file modification date before/after vim runs. :wq changes mtime (saved), :q! does not (aborted). Exit code is unreliable (0 for both) | ✓ Good |
+| NSPanel with hidesOnDeactivate=false | Floating panel stays visible when user clicks other apps. NSPanel defaults hidesOnDeactivate to true which hides the window | ✓ Good |
+| Strip trailing newline after :wq | Vim always appends a trailing newline on save. Trimming before paste-back prevents an extra blank line in the target text field | ✓ Good |
+| Composing resolver for vim path | UserDefaultsVimPathResolver wraps ShellVimPathResolver — checks UserDefaults first, falls back silently on invalid/missing custom path | ✓ Good |
+| Static "Vim: (default)" in menu | Avoid calling ShellVimPathResolver on main thread during menu build (100-300ms block). Show static label, resolve at trigger time | ✓ Good |
 
 ## Evolution
 
@@ -87,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-02 after Phase 6 completion*
+*Last updated: 2026-04-02 after v1.0 milestone completion*
