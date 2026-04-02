@@ -19,8 +19,8 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 - [x] System-wide double-tap Control key detection to trigger vim — Validated in Phase 2: Global Hotkey Detection
 - [x] Grab existing text from the focused text field (Cmd+A, Cmd+C via Accessibility APIs) — Validated in Phase 3: Accessibility Bridge and Clipboard
 - [x] Write grabbed text to a temporary file — Validated in Phase 3: Accessibility Bridge and Clipboard
-- [ ] Launch vim in a terminal window with the temp file
-- [ ] On :wq, read the edited temp file contents
+- [x] Launch vim in a terminal window with the temp file — Validated in Phase 4: Vim Session
+- [x] On :wq, read the edited temp file contents — Validated in Phase 4: Vim Session
 - [x] Paste edited text back into the original text field (Cmd+A, Cmd+V via Accessibility APIs) — Validated in Phase 3: Accessibility Bridge and Clipboard
 - [ ] Clean up temporary file after paste
 - [ ] Small, fast-launching binary
@@ -60,6 +60,9 @@ Seamless vim editing in any text input on macOS — the trigger-edit-return loop
 | Developer signing required from Phase 1 | TCC won't register ad-hoc signed apps in privacy settings | Confirmed in Phase 1 |
 | Temp file for vim I/O | Vim naturally writes to files on :wq. Simpler and more reliable than trying to capture vim's stdout or use IPC | Confirmed in Phase 3 |
 | Cmd+A/Cmd+C/Cmd+V for text field interaction | Standard macOS way to interact with text fields in other apps via Accessibility. Works across virtually all apps | Confirmed in Phase 3 |
+| SwiftTerm for vim hosting | Embedded terminal emulator via LocalProcessTerminalView — proper PTY for vim with colors, cursor movement, raw mode. No Terminal.app dependency | Confirmed in Phase 4 |
+| Mtime-based exit detection | Compare file modification date before/after vim runs. :wq changes mtime (saved), :q! does not (aborted). Exit code is unreliable (0 for both) | Confirmed in Phase 4 |
+| NSPanel with hidesOnDeactivate=false | Floating panel stays visible when user clicks other apps. NSPanel defaults hidesOnDeactivate to true which hides the window | Confirmed in Phase 4 |
 
 ## Evolution
 
