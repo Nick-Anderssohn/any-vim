@@ -13,9 +13,28 @@ DerivedData/
 *.profraw
 *.profdata
 
+# Signing and provisioning
+*.p12
+*.pem
+*.cer
+*.der
+*.mobileprovision
+*.provisionprofile
+ExportOptions.plist
+
+# Archives and distribution
+*.xcarchive
+*.ipa
+*.pkg
+*.dmg
+*.zip
+
 # OS files
 .DS_Store
 
 # Swift Package Manager
 .build/
 .swiftpm/
+
+# Claude Code worktrees
+.claude/worktrees/
