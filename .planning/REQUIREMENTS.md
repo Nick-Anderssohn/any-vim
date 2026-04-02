@@ -28,10 +28,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Vim Session
 
-- [ ] **VIM-01**: App opens a lightweight dedicated terminal window (not Terminal.app) with vim loaded with the temp file
-- [ ] **VIM-02**: Terminal window uses SwiftTerm or equivalent for a PTY-backed vim session
-- [ ] **VIM-03**: User's existing ~/.vimrc is used (vim launched normally)
-- [ ] **VIM-04**: App detects vim process termination (user did :wq or :q!)
+- [x] **VIM-01**: App opens a lightweight dedicated terminal window (not Terminal.app) with vim loaded with the temp file
+- [x] **VIM-02**: Terminal window uses SwiftTerm or equivalent for a PTY-backed vim session
+- [x] **VIM-03**: User's existing ~/.vimrc is used (vim launched normally)
+- [x] **VIM-04**: App detects vim process termination (user did :wq or :q!)
 
 ### Text Restore
 
@@ -107,10 +107,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAPT-02 | Phase 3 | Complete |
 | CAPT-03 | Phase 3 | Complete |
 | CAPT-04 | Phase 3 | Complete |
-| VIM-01 | Phase 4 | Pending |
-| VIM-02 | Phase 4 | Pending |
-| VIM-03 | Phase 4 | Pending |
-| VIM-04 | Phase 4 | Pending |
+| VIM-01 | Phase 4 | Complete |
+| VIM-02 | Phase 4 | Complete |
+| VIM-03 | Phase 4 | Complete |
+| VIM-04 | Phase 4 | Complete |
 | REST-01 | Phase 5 | Pending |
 | REST-02 | Phase 5 | Pending |
 | REST-03 | Phase 5 | Pending |
