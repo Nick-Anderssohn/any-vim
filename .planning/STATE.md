@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-04-01T21:48:36.958Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-04-02T01:38:42.048Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 8
-  completed_plans: 8
+  completed_plans: 9
   percent: 0
 ---
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-app-shell-and-permissions P02 | 8 | 2 tasks | 9 files |
 | Phase 02-global-hotkey-detection P02 | 1225 | 1 tasks | 3 files |
 | Phase 03-accessibility-bridge-and-clipboard P02 | 20 | 2 tasks | 4 files |
+| Phase 04-vim-session P01 | 23 | 1 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [Phase 02-global-hotkey-detection]: MenuBarController created before hotkeyManager.install() to avoid nil crash on synchronous health change callback
 - [Phase 03-accessibility-bridge-and-clipboard]: changeCount sentinel for copy detection: read before Cmd+A and after Cmd+C; unchanged count = empty field, write empty temp file rather than bail
 - [Phase 03-accessibility-bridge-and-clipboard]: abortAndRestore called immediately in Phase 3 handleHotkeyTrigger as placeholder — vim session wiring deferred to Phase 5
+- [Phase 04-vim-session]: showAlerts: Bool injection in VimSessionManager to suppress NSAlert in unit tests
+- [Phase 04-vim-session]: VimExitResult.from(mtimeBefore:mtimeAfter:) static factory for pure unit-testable mtime comparison
+- [Phase 04-vim-session]: nonisolated delegate methods + Task { @MainActor in } for Swift 6 concurrency safety in LocalProcessTerminalViewDelegate
 
 ### Pending Todos
 
@@ -88,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T20:56:26.715Z
-Stopped at: Completed 03-02-PLAN.md
+Last session: 2026-04-02T01:38:42.046Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
