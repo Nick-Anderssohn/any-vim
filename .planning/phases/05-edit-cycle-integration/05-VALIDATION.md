@@ -1,9 +1,9 @@
 ---
 phase: 5
 slug: edit-cycle-integration
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: complete
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-01
 ---
 
@@ -38,11 +38,11 @@ created: 2026-04-01
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 05-01-01 | 01 | 0 | REST-01, REST-03, REST-05 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests` | ❌ W0 | ⬜ pending |
-| 05-01-02 | 01 | 1 | REST-01 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testSavedExitCallsRestoreTextWithEditedContent` | ❌ W0 | ⬜ pending |
-| 05-01-03 | 01 | 1 | REST-03 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testAbortedExitCallsAbortAndRestore` | ❌ W0 | ⬜ pending |
-| 05-01-04 | 01 | 1 | REST-05 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testTempFileDeletedAfterSave` | ❌ W0 | ⬜ pending |
-| 05-01-05 | 01 | 1 | REST-04 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testReentrancyGuardBlocksSecondTrigger` | ❌ W0 | ⬜ pending |
+| 05-01-01 | 01 | 0 | REST-01, REST-03, REST-05 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests` | ✅ | ✅ green |
+| 05-01-02 | 01 | 1 | REST-01 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testSavedExitCallsRestoreTextWithEditedContent` | ✅ | ✅ green |
+| 05-01-03 | 01 | 1 | REST-03 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testAbortedExitCallsAbortAndRestore` | ✅ | ✅ green |
+| 05-01-04 | 01 | 1 | REST-05 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testTempFileDeletedAfterSave` | ✅ | ✅ green |
+| 05-01-05 | 01 | 1 | REST-04 | unit | `xcodebuild test -project AnyVim.xcodeproj -scheme AnyVim -destination 'platform=macOS' -only-testing:AnyVimTests/EditCycleCoordinatorTests/testReentrancyGuardBlocksSecondTrigger` | ✅ | ✅ green |
 | 05-02-01 | 02 | 2 | REST-01, REST-02, REST-03, REST-04, REST-05 | manual | N/A — manual smoke test | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
@@ -51,8 +51,8 @@ created: 2026-04-01
 
 ## Wave 0 Requirements
 
-- [ ] `AnyVimTests/EditCycleCoordinatorTests.swift` — test stubs for edit cycle orchestration (REST-01, REST-03, REST-04, REST-05)
-- [ ] Mock protocols for AccessibilityBridge, VimSessionManager, TempFileManager if not already testable via protocols
+- [x] `AnyVimTests/EditCycleCoordinatorTests.swift` — test stubs for edit cycle orchestration (REST-01, REST-03, REST-04, REST-05)
+- [x] Mock protocols for AccessibilityBridge, VimSessionManager, TempFileManager if not already testable via protocols
 
 *Existing test infrastructure (XCTest, project structure) already in place from Phase 1.*
 
@@ -71,11 +71,11 @@ created: 2026-04-01
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 15s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 15s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** complete (2026-04-01)
