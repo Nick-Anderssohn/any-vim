@@ -35,11 +35,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Text Restore
 
-- [ ] **REST-01**: On :wq, app reads the edited temp file and places contents on the clipboard
-- [ ] **REST-02**: App sends Cmd+A, Cmd+V to the original application to replace text field contents
-- [ ] **REST-03**: On :q!, app detects the file was not modified and skips paste-back
-- [ ] **REST-04**: After paste-back (or abort), app restores the user's original clipboard contents
-- [ ] **REST-05**: Temp file is deleted after the edit cycle completes
+- [x] **REST-01**: On :wq, app reads the edited temp file and places contents on the clipboard
+- [x] **REST-02**: App sends Cmd+A, Cmd+V to the original application to replace text field contents
+- [x] **REST-03**: On :q!, app detects the file was not modified and skips paste-back
+- [x] **REST-04**: After paste-back (or abort), app restores the user's original clipboard contents
+- [x] **REST-05**: Temp file is deleted after the edit cycle completes
 
 ### Menu Bar
 
@@ -111,11 +111,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VIM-02 | Phase 4 | Complete |
 | VIM-03 | Phase 4 | Complete |
 | VIM-04 | Phase 4 | Complete |
-| REST-01 | Phase 5 | Pending |
-| REST-02 | Phase 5 | Pending |
-| REST-03 | Phase 5 | Pending |
-| REST-04 | Phase 5 | Pending |
-| REST-05 | Phase 5 | Pending |
+| REST-01 | Phase 5 | Complete |
+| REST-02 | Phase 5 | Complete |
+| REST-03 | Phase 5 | Complete |
+| REST-04 | Phase 5 | Complete |
+| REST-05 | Phase 5 | Complete |
 | MENU-01 | Phase 1 | Complete |
 | MENU-02 | Phase 6 | Pending |
 | MENU-03 | Phase 1 | Complete |
