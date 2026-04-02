@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 6 context gathered
-last_updated: "2026-04-02T18:09:23.446Z"
+status: executing
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-04-02T19:24:19.073Z"
 last_activity: 2026-04-02
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 14
+  completed_plans: 13
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** Seamless vim editing in any text input on macOS — the trigger-edit-return loop must feel instant and reliable.
-**Current focus:** Phase 05 — Edit Cycle Integration
+**Current focus:** Phase 06 — polish-and-configuration
 
 ## Current Position
 
-Phase: 6
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 06 (polish-and-configuration) — EXECUTING
+Plan: 2 of 2
+Status: Ready to execute
 Last activity: 2026-04-02
 
 Progress: [░░░░░░░░░░] 0%
@@ -58,6 +58,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-accessibility-bridge-and-clipboard P02 | 20 | 2 tasks | 4 files |
 | Phase 05 P01 | 15 | 2 tasks | 7 files |
 | Phase 05 P02 | 10 | 1 tasks | 1 files |
+| Phase 06-polish-and-configuration P01 | 7 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,8 @@ Recent decisions affecting current work:
 - [Phase 05-edit-cycle-integration]: Protocol property types (any TextCapturing)! and (any VimSessionOpening)! on AppDelegate enable test injection without breaking applicationDidFinishLaunching
 - [Phase 05-edit-cycle-integration]: abortAndRestore deleteTempFile kept idempotent (D-06) — .saved path also calls TempFileManager().deleteTempFile explicitly rather than centralizing
 - [Phase 05-edit-cycle-integration]: Strip trailing newline from vim-saved content before paste-back: vim always appends a newline when saving; not trimming produces a trailing newline in every text field edit
+- [Phase 06-polish-and-configuration]: Use statusItem? optional chain (not statusItem!) to prevent nil crash in unit tests where applicationDidFinishLaunching is never called
+- [Phase 06-polish-and-configuration]: Show 'Vim: (default)' for no-custom-path case in menu to avoid calling ShellVimPathResolver on main thread (100-300ms block, Pitfall 3)
 
 ### Pending Todos
 
@@ -94,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-02T18:09:23.444Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-polish-and-configuration/06-CONTEXT.md
+Last session: 2026-04-02T19:24:19.072Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: None
