@@ -74,7 +74,10 @@ Plans:
   2. The user's ~/.vimrc settings are applied in the vim session
   3. Closing vim with :wq signals the app that an edit was completed
   4. Closing vim with :q! signals the app that the edit was aborted
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 04-01-PLAN.md — SwiftTerm dependency, VimPanel, VimSessionManager, protocols, and unit tests
+- [ ] 04-02-PLAN.md — Wire VimSessionManager into AppDelegate, manual verification
 **UI hint**: yes
 
 ### Phase 5: Edit Cycle Integration
@@ -108,6 +111,6 @@ Note: Phases 3 and 4 are independent of each other and may be planned/built in p
 | 1. App Shell and Permissions | 2/3 | In Progress|  |
 | 2. Global Hotkey Detection | 1/2 | In Progress|  |
 | 3. Accessibility Bridge and Clipboard | 2/3 | In Progress|  |
-| 4. Vim Session | 0/? | Not started | - |
+| 4. Vim Session | 0/2 | Planned | - |
 | 5. Edit Cycle Integration | 0/? | Not started | - |
 | 6. Polish and Configuration | 0/? | Not started | - |
