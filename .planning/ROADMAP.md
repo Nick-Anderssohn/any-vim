@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Global Hotkey Detection** - Reliable double-tap Control detection via CGEventTap with health monitoring
 - [ ] **Phase 3: Accessibility Bridge and Clipboard** - Text grab and paste-back with full clipboard preservation across all exit paths
 - [x] **Phase 4: Vim Session** - Floating SwiftTerm window hosting vim, detecting :wq/:q! exit reliably (completed 2026-04-02)
-- [ ] **Phase 5: Edit Cycle Integration** - Complete trigger-grab-edit-paste loop wired with re-entrancy protection and temp file cleanup
+- [x] **Phase 5: Edit Cycle Integration** - Complete trigger-grab-edit-paste loop wired with re-entrancy protection and temp file cleanup (completed 2026-04-02)
 - [ ] **Phase 6: Polish and Configuration** - Visual session indicator, configurable vim path, and documented compatibility
 
 ## Phase Details
@@ -89,10 +89,10 @@ Plans:
   2. After :q!, the original text field is unchanged
   3. The temp file is deleted after every edit cycle, regardless of how vim exited
   4. Triggering the hotkey while an edit session is already active does nothing (no second window opens)
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 05-01-PLAN.md — Testability protocols, edit cycle wiring in AppDelegate, unit tests for all REST requirements
-- [ ] 05-02-PLAN.md — Manual end-to-end verification in TextEdit and browser
+- [x] 05-02-PLAN.md — Manual end-to-end verification in TextEdit and browser
 
 ### Phase 6: Polish and Configuration
 **Goal**: The app provides visual feedback during active sessions and lets the user point to a non-default vim binary
@@ -115,5 +115,5 @@ Note: Phases 3 and 4 are independent of each other and may be planned/built in p
 | 2. Global Hotkey Detection | 1/2 | In Progress|  |
 | 3. Accessibility Bridge and Clipboard | 2/3 | In Progress|  |
 | 4. Vim Session | 2/2 | Complete   | 2026-04-02 |
-| 5. Edit Cycle Integration | 1/2 | In Progress|  |
+| 5. Edit Cycle Integration | 2/2 | Complete   | 2026-04-02 |
 | 6. Polish and Configuration | 0/? | Not started | - |
