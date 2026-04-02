@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 context gathered
-last_updated: "2026-04-02T00:59:39.556Z"
+stopped_at: Completed 04-02 Task 1, awaiting human-verify checkpoint Task 2
+last_updated: "2026-04-02T01:58:28.009Z"
 last_activity: 2026-04-02 -- Phase 04 execution started
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 10
   percent: 0
 ---
 
@@ -76,6 +76,7 @@ Recent decisions affecting current work:
 - [Phase 02-global-hotkey-detection]: MenuBarController created before hotkeyManager.install() to avoid nil crash on synchronous health change callback
 - [Phase 03-accessibility-bridge-and-clipboard]: changeCount sentinel for copy detection: read before Cmd+A and after Cmd+C; unchanged count = empty field, write empty temp file rather than bail
 - [Phase 03-accessibility-bridge-and-clipboard]: abortAndRestore called immediately in Phase 3 handleHotkeyTrigger as placeholder — vim session wiring deferred to Phase 5
+- [Phase 04-vim-session]: abortAndRestore called for both .saved and .aborted exits in Phase 4 — Phase 5 will differentiate and call restoreText() on .saved
 
 ### Pending Todos
 
@@ -88,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-01T22:39:47.697Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-vim-session/04-CONTEXT.md
+Last session: 2026-04-02T01:58:16.602Z
+Stopped at: Completed 04-02 Task 1, awaiting human-verify checkpoint Task 2
+Resume file: None
