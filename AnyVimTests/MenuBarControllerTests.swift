@@ -105,4 +105,79 @@ final class MenuBarControllerTests: XCTestCase {
             "Menu should not contain any 'Hotkey' item when hotkeyManager is nil"
         )
     }
+
+    // MARK: - Vim path section tests (CONF-01)
+
+    override func tearDown() {
+        // Clean up any custom vim path set during tests
+        UserDefaults.standard.removeObject(forKey: "customVimPath")
+        super.tearDown()
+    }
+
+    private func makeControllerWithVimResolver() -> MenuBarController {
+        let stub = StubVimPathResolver()
+        return MenuBarController(
+            permissionManager: permissionStub,
+            loginItemManager: loginStub,
+            vimPathResolver: stub
+        )
+    }
+
+    func testBuildMenuContainsVimPathInfoItem() {
+        let ctrl = makeControllerWithVimResolver()
+        let menu = ctrl.buildMenu()
+        let titles = menu.items.map { $0.title }
+        XCTAssertTrue(titles.contains(where: { $0.hasPrefix("Vim:") }),
+            "Menu should contain a 'Vim:' info item when vimPathResolver is set")
+    }
+
+    func testBuildMenuContainsSetVimPathItem() {
+        let ctrl = makeControllerWithVimResolver()
+        let menu = ctrl.buildMenu()
+        let titles = menu.items.map { $0.title }
+        XCTAssertTrue(titles.contains("Set Vim Path..."),
+            "Menu should always contain 'Set Vim Path...' when vimPathResolver is set")
+    }
+
+    func testBuildMenuShowsInvalidPathWhenCustomPathNotExecutable() {
+        UserDefaults.standard.set("/nonexistent/path/vim", forKey: "customVimPath")
+        let ctrl = makeControllerWithVimResolver()
+        let menu = ctrl.buildMenu()
+        let titles = menu.items.map { $0.title }
+        XCTAssertTrue(titles.contains("Vim: (custom path invalid)"),
+            "Menu should show '(custom path invalid)' when custom path is not executable")
+    }
+
+    func testBuildMenuShowsResetItemWhenCustomPathSet() {
+        UserDefaults.standard.set("/nonexistent/path/vim", forKey: "customVimPath")
+        let ctrl = makeControllerWithVimResolver()
+        let menu = ctrl.buildMenu()
+        let titles = menu.items.map { $0.title }
+        XCTAssertTrue(titles.contains("Reset Vim Path"),
+            "Menu should show 'Reset Vim Path' when a custom path is set")
+    }
+
+    func testBuildMenuOmitsResetItemWhenNoCustomPath() {
+        UserDefaults.standard.removeObject(forKey: "customVimPath")
+        let ctrl = makeControllerWithVimResolver()
+        let menu = ctrl.buildMenu()
+        let titles = menu.items.map { $0.title }
+        XCTAssertFalse(titles.contains("Reset Vim Path"),
+            "Menu should NOT show 'Reset Vim Path' when no custom path is set")
+    }
+
+    func testBuildMenuOmitsVimSectionWhenNoResolver() {
+        // controller from setUp has no vimPathResolver
+        let menu = controller.buildMenu()
+        let titles = menu.items.map { $0.title }
+        XCTAssertFalse(titles.contains("Set Vim Path..."),
+            "Menu should NOT show vim path section when vimPathResolver is nil")
+    }
+}
+
+// MARK: - StubVimPathResolver (for MenuBarControllerTests)
+
+private final class StubVimPathResolver: VimPathResolving {
+    var pathToReturn: String? = "/usr/bin/vim"
+    func resolveVimPath() -> String? { return pathToReturn }
 }

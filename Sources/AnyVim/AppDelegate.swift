@@ -58,7 +58,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         accessibilityBridge = AccessibilityBridge(permissionChecker: permissionManager)
 
         // Create VimSessionManager (Phase 4: hosts vim in floating SwiftTerm window)
-        vimSessionManager = VimSessionManager()
+        // CONF-01: inject UserDefaultsVimPathResolver to support custom vim binary
+        vimSessionManager = VimSessionManager(vimPathResolver: UserDefaultsVimPathResolver())
 
         // Create and wire HotkeyManager (D-06: install immediately if permissions already granted)
         hotkeyManager = HotkeyManager()
@@ -67,10 +68,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Build menu with live state (must happen before install() — the health change
         // callback fires synchronously during install and calls rebuildMenu())
+        // CONF-01: pass vimPathResolver and rebuild callback for vim path section
         menuBarController = MenuBarController(
             permissionManager: permissionManager,
             loginItemManager: loginItemManager,
-            hotkeyManager: hotkeyManager
+            hotkeyManager: hotkeyManager,
+            vimPathResolver: UserDefaultsVimPathResolver(),
+            onVimPathChange: { [weak self] in self?.rebuildMenu() }
         )
         statusItem.menu = menuBarController.buildMenu()
 
@@ -132,8 +136,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // D-01: silent swallow if session already active
             guard !isEditSessionActive else { return }
             isEditSessionActive = true
+            // MENU-02 D-03: set active icon before captureText
+            // statusItem is nil in unit test context — optional chain prevents crash
+            statusItem?.button?.image = NSImage(systemSymbolName: "pencil.circle.fill",
+                                                 accessibilityDescription: "AnyVim \u{2014} editing")
+            statusItem?.button?.image?.isTemplate = true
             // D-02: defer ensures reset on ALL exit paths (including captureText failure)
-            defer { isEditSessionActive = false }
+            defer {
+                isEditSessionActive = false
+                // MENU-02 D-03: restore idle icon on ALL exit paths
+                statusItem?.button?.image = NSImage(systemSymbolName: "character.cursor.ibeam",
+                                                     accessibilityDescription: "AnyVim")
+                statusItem?.button?.image?.isTemplate = true
+            }
 
             guard let result = await accessibilityBridge.captureText() else {
                 showCaptureFailureAlert()

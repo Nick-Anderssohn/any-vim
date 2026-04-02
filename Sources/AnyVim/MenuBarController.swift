@@ -8,17 +8,23 @@ final class MenuBarController {
     private let permissionManager: PermissionChecking
     private let loginItemManager: LoginItemManaging
     private let hotkeyManager: HotkeyManaging?
+    private let vimPathResolver: VimPathResolving?
+    private let onVimPathChange: (() -> Void)?
 
     // MARK: - Init
 
     init(
         permissionManager: PermissionChecking,
         loginItemManager: LoginItemManaging,
-        hotkeyManager: HotkeyManaging? = nil
+        hotkeyManager: HotkeyManaging? = nil,
+        vimPathResolver: VimPathResolving? = nil,
+        onVimPathChange: (() -> Void)? = nil
     ) {
         self.permissionManager = permissionManager
         self.loginItemManager = loginItemManager
         self.hotkeyManager = hotkeyManager
+        self.vimPathResolver = vimPathResolver
+        self.onVimPathChange = onVimPathChange
     }
 
     // MARK: - Menu construction
@@ -76,6 +82,39 @@ final class MenuBarController {
 
         menu.addItem(NSMenuItem.separator())
 
+        // --- Vim path section (CONF-01 D-05, D-06) ---
+
+        if let _ = vimPathResolver {
+            let customPath = UserDefaults.standard.string(forKey: "customVimPath")
+            let isCustomSet = customPath != nil && !customPath!.isEmpty
+
+            let pathDisplay: String
+            if isCustomSet {
+                // Validate custom path executability — avoid calling resolver (Pitfall 3: blocks main thread)
+                let isValid = FileManager.default.isExecutableFile(atPath: customPath!)
+                pathDisplay = isValid ? "Vim: \(customPath!)" : "Vim: (custom path invalid)"
+            } else {
+                // No custom path — show static default label (Pitfall 3: avoid ShellVimPathResolver on main thread)
+                pathDisplay = "Vim: (default)"
+            }
+
+            let pathItem = NSMenuItem(title: pathDisplay, action: nil, keyEquivalent: "")
+            pathItem.isEnabled = false
+            menu.addItem(pathItem)
+
+            let setItem = NSMenuItem(title: "Set Vim Path...", action: #selector(setVimPath), keyEquivalent: "")
+            setItem.target = self
+            menu.addItem(setItem)
+
+            if isCustomSet {
+                let resetItem = NSMenuItem(title: "Reset Vim Path", action: #selector(resetVimPath), keyEquivalent: "")
+                resetItem.target = self
+                menu.addItem(resetItem)
+            }
+
+            menu.addItem(NSMenuItem.separator())
+        }
+
         // --- Launch at Login toggle (D-09) ---
 
         let loginItem = NSMenuItem(
@@ -118,5 +157,30 @@ final class MenuBarController {
             loginItemManager.enable()
         }
         // Menu checkmark updates on next open — buildMenu() reads live state
+    }
+
+    @objc private func setVimPath() {
+        let panel = NSOpenPanel()
+        panel.title = "Choose Vim Binary"
+        panel.message = "Select the vim executable to use with AnyVim"
+        panel.prompt = "Select"
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.allowedContentTypes = []
+        panel.directoryURL = URL(fileURLWithPath: "/usr/local/bin")
+
+        if panel.runModal() == .OK, let url = panel.url {
+            let path = url.path
+            if FileManager.default.isExecutableFile(atPath: path) {
+                UserDefaults.standard.set(path, forKey: "customVimPath")
+                onVimPathChange?()
+            }
+        }
+    }
+
+    @objc private func resetVimPath() {
+        UserDefaults.standard.removeObject(forKey: "customVimPath")
+        onVimPathChange?()
     }
 }
