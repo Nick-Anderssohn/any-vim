@@ -120,6 +120,7 @@ final class VimSessionManager: NSObject {
             defer: false
         )
         panel.level = .floating
+        panel.hidesOnDeactivate = false     // Stay visible when user clicks another app
         panel.isReleasedWhenClosed = false  // Pitfall 6: VimSessionManager owns lifecycle
         panel.title = "AnyVim"
 
