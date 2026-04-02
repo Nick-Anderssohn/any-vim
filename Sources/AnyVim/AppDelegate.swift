@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var hotkeyManager: HotkeyManager!
     private var menuBarController: MenuBarController!
     private var accessibilityBridge: AccessibilityBridge!
+    private var vimSessionManager: VimSessionManager!
 
     // MARK: - Launch
 
@@ -52,6 +53,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Create AccessibilityBridge (Phase 3: captures text on hotkey trigger)
         accessibilityBridge = AccessibilityBridge(permissionChecker: permissionManager)
+
+        // Create VimSessionManager (Phase 4: hosts vim in floating SwiftTerm window)
+        vimSessionManager = VimSessionManager()
 
         // Create and wire HotkeyManager (D-06: install immediately if permissions already granted)
         hotkeyManager = HotkeyManager()
@@ -127,13 +131,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 showCaptureFailureAlert()
                 return
             }
-            // Phase 3: capture only — log the temp file path.
-            // Phase 4 will open vim with result.tempFileURL.
-            // Phase 5 will wire the full cycle.
-            print("[AnyVim] Text captured to: \(result.tempFileURL.path)")
-            print("[AnyVim] Original app: \(result.originalApp.localizedName ?? "unknown")")
-            // NOTE: In Phase 3, we don't have vim yet, so clean up immediately.
-            // This cleanup will move to Phase 5 when the full cycle is wired.
+
+            // Phase 4: Open vim with captured text
+            let exitResult = await vimSessionManager.openVimSession(tempFileURL: result.tempFileURL)
+
+            // Phase 4: Log exit result. Phase 5 will wire paste-back and cleanup.
+            switch exitResult {
+            case .saved:
+                print("[AnyVim] Vim session completed: saved")
+            case .aborted:
+                print("[AnyVim] Vim session completed: aborted")
+            }
+
+            // NOTE: Phase 4 still uses abortAndRestore for ALL exits.
+            // Phase 5 will read the edited file on .saved and call restoreText().
             accessibilityBridge.abortAndRestore(captureResult: result)
         }
     }
