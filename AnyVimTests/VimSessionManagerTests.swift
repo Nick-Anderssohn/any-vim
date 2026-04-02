@@ -123,6 +123,92 @@ final class VimSessionManagerTests: XCTestCase {
         XCTAssertNotNil(manager, "VimSessionManager should initialize with mock dependencies")
     }
 
+    // MARK: - UserDefaultsVimPathResolver tests
+
+    func testUserDefaultsVimPathResolverReturnsCustomPathWhenExecutable() throws {
+        let suiteName = "test-\(UUID().uuidString)"
+        let testDefaults = UserDefaults(suiteName: suiteName)!
+        defer { testDefaults.removePersistentDomain(forName: suiteName) }
+
+        // Create a real executable temp file
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent("testvim-\(UUID().uuidString)")
+        FileManager.default.createFile(atPath: tempURL.path, contents: Data("#!/bin/sh".utf8))
+        defer { try? FileManager.default.removeItem(at: tempURL) }
+
+        // Set executable permission (0o755)
+        try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: tempURL.path)
+
+        let fallback = MockVimPathResolver()
+        fallback.pathToReturn = "/usr/bin/vim"
+        testDefaults.set(tempURL.path, forKey: "customVimPath")
+
+        let resolver = UserDefaultsVimPathResolver(
+            fallback: fallback,
+            defaults: testDefaults,
+            key: "customVimPath"
+        )
+
+        XCTAssertEqual(resolver.resolveVimPath(), tempURL.path,
+            "Should return custom executable path from UserDefaults")
+    }
+
+    func testUserDefaultsVimPathResolverFallsBackWhenCustomPathNotExecutable() {
+        let suiteName = "test-\(UUID().uuidString)"
+        let testDefaults = UserDefaults(suiteName: suiteName)!
+        defer { testDefaults.removePersistentDomain(forName: suiteName) }
+
+        let fallback = MockVimPathResolver()
+        fallback.pathToReturn = "/usr/bin/vim"
+        testDefaults.set("/nonexistent/path/vim", forKey: "customVimPath")
+
+        let resolver = UserDefaultsVimPathResolver(
+            fallback: fallback,
+            defaults: testDefaults,
+            key: "customVimPath"
+        )
+
+        XCTAssertEqual(resolver.resolveVimPath(), "/usr/bin/vim",
+            "Should fall back to ShellVimPathResolver when custom path is not executable")
+    }
+
+    func testUserDefaultsVimPathResolverFallsBackWhenNoCustomPath() {
+        let suiteName = "test-\(UUID().uuidString)"
+        let testDefaults = UserDefaults(suiteName: suiteName)!
+        defer { testDefaults.removePersistentDomain(forName: suiteName) }
+
+        let fallback = MockVimPathResolver()
+        fallback.pathToReturn = "/usr/bin/vim"
+
+        let resolver = UserDefaultsVimPathResolver(
+            fallback: fallback,
+            defaults: testDefaults,
+            key: "customVimPath"
+        )
+
+        XCTAssertEqual(resolver.resolveVimPath(), "/usr/bin/vim",
+            "Should fall back when no custom path is set in UserDefaults")
+    }
+
+    func testUserDefaultsVimPathResolverFallsBackWhenCustomPathIsEmpty() {
+        let suiteName = "test-\(UUID().uuidString)"
+        let testDefaults = UserDefaults(suiteName: suiteName)!
+        defer { testDefaults.removePersistentDomain(forName: suiteName) }
+
+        let fallback = MockVimPathResolver()
+        fallback.pathToReturn = "/usr/bin/vim"
+        testDefaults.set("", forKey: "customVimPath")
+
+        let resolver = UserDefaultsVimPathResolver(
+            fallback: fallback,
+            defaults: testDefaults,
+            key: "customVimPath"
+        )
+
+        XCTAssertEqual(resolver.resolveVimPath(), "/usr/bin/vim",
+            "Should fall back when custom path is empty string")
+    }
+
     // MARK: - openVimSession returns .aborted when vim not found (D-09 path)
 
     func testOpenVimSessionReturnsAbortedWhenVimNotFound() async {

@@ -134,6 +134,39 @@ struct ShellVimPathResolver: VimPathResolving {
     }
 }
 
+// MARK: - UserDefaultsVimPathResolver
+
+/// Composing resolver: checks UserDefaults for a custom vim binary path first,
+/// falls back to the given resolver (typically ShellVimPathResolver) when the
+/// custom path is absent, empty, or not executable.
+///
+/// D-06: invalid custom path falls back silently — no alert at resolution time.
+struct UserDefaultsVimPathResolver: VimPathResolving {
+    private let fallback: VimPathResolving
+    private let defaults: UserDefaults
+    private let key: String
+
+    init(
+        fallback: VimPathResolving = ShellVimPathResolver(),
+        defaults: UserDefaults = .standard,
+        key: String = "customVimPath"
+    ) {
+        self.fallback = fallback
+        self.defaults = defaults
+        self.key = key
+    }
+
+    func resolveVimPath() -> String? {
+        if let custom = defaults.string(forKey: key),
+           !custom.isEmpty,
+           FileManager.default.isExecutableFile(atPath: custom) {
+            return custom
+        }
+        // D-06: invalid custom path falls back silently
+        return fallback.resolveVimPath()
+    }
+}
+
 // MARK: - SystemFileModificationDateReader
 
 /// Production implementation: reads file modification date via FileManager.
