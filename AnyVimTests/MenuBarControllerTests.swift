@@ -111,6 +111,7 @@ final class MenuBarControllerTests: XCTestCase {
     override func tearDown() {
         // Clean up any custom vim path set during tests
         UserDefaults.standard.removeObject(forKey: "customVimPath")
+        UserDefaults.standard.removeObject(forKey: "copyExistingText")
         super.tearDown()
     }
 
@@ -172,6 +173,32 @@ final class MenuBarControllerTests: XCTestCase {
         let titles = menu.items.map { $0.title }
         XCTAssertFalse(titles.contains("Set Vim Path..."),
             "Menu should NOT show vim path section when vimPathResolver is nil")
+    }
+
+    // MARK: - Copy Existing Text toggle tests
+
+    func testBuildMenuContainsCopyExistingTextItem() {
+        let menu = controller.buildMenu()
+        let titles = menu.items.map { $0.title }
+        XCTAssertTrue(titles.contains("Copy Existing Text"),
+            "Menu should contain 'Copy Existing Text' item")
+    }
+
+    func testCopyExistingTextItemCheckedWhenEnabled() {
+        UserDefaults.standard.register(defaults: ["copyExistingText": true])
+        UserDefaults.standard.set(true, forKey: "copyExistingText")
+        let menu = controller.buildMenu()
+        let item = menu.items.first(where: { $0.title == "Copy Existing Text" })
+        XCTAssertEqual(item?.state, .on,
+            "Copy Existing Text item should be checked (.on) when UserDefaults value is true")
+    }
+
+    func testCopyExistingTextItemUncheckedWhenDisabled() {
+        UserDefaults.standard.set(false, forKey: "copyExistingText")
+        let menu = controller.buildMenu()
+        let item = menu.items.first(where: { $0.title == "Copy Existing Text" })
+        XCTAssertEqual(item?.state, .off,
+            "Copy Existing Text item should be unchecked (.off) when UserDefaults value is false")
     }
 }
 

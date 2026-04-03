@@ -115,6 +115,17 @@ final class MenuBarController {
             menu.addItem(NSMenuItem.separator())
         }
 
+        // --- Copy Existing Text toggle ---
+
+        let copyExistingItem = NSMenuItem(
+            title: "Copy Existing Text",
+            action: #selector(toggleCopyExistingText),
+            keyEquivalent: ""
+        )
+        copyExistingItem.target = self
+        copyExistingItem.state = UserDefaults.standard.bool(forKey: "copyExistingText") ? .on : .off
+        menu.addItem(copyExistingItem)
+
         // --- Launch at Login toggle (D-09) ---
 
         let loginItem = NSMenuItem(
@@ -148,6 +159,12 @@ final class MenuBarController {
 
     @objc private func openInputMonitoringSettings() {
         permissionManager.openInputMonitoringSettings()
+    }
+
+    @objc private func toggleCopyExistingText() {
+        let current = UserDefaults.standard.bool(forKey: "copyExistingText")
+        UserDefaults.standard.set(!current, forKey: "copyExistingText")
+        // Menu checkmark updates on next open — buildMenu() reads live state
     }
 
     @objc private func toggleLaunchAtLogin() {
