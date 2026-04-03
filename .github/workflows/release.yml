@@ -20,7 +20,7 @@ on:
 jobs:
   build-sign-notarize-release:
     name: Build, Sign, Notarize, Release
-    runs-on: macos-15
+    runs-on: macos-14
 
     env:
       KEYCHAIN_NAME: build.keychain
@@ -34,8 +34,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode 16.3
-        run: sudo xcode-select -s /Applications/Xcode_16.3.app
+      - name: Select latest Xcode
+        run: sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
 
       - name: Import signing certificate
         env:
@@ -84,25 +84,26 @@ jobs:
             CODE_SIGN_IDENTITY="Developer ID Application" \
             OTHER_CODE_SIGN_FLAGS="--keychain $KEYCHAIN_NAME"
 
+      - name: Write ExportOptions.plist
+        run: |
+          printf '%s\n' \
+            '<?xml version="1.0" encoding="UTF-8"?>' \
+            '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' \
+            '<plist version="1.0">' \
+            '<dict>' \
+            '  <key>method</key>' \
+            '  <string>developer-id</string>' \
+            '  <key>teamID</key>' \
+            '  <string>758YPU2N3M</string>' \
+            '  <key>signingStyle</key>' \
+            '  <string>manual</string>' \
+            '  <key>signingCertificate</key>' \
+            '  <string>Developer ID Application</string>' \
+            '</dict>' \
+            '</plist>' > /tmp/ExportOptions.plist
+
       - name: Export archive
         run: |
-          cat > /tmp/ExportOptions.plist <<'PLIST'
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key>
-            <string>developer-id</string>
-            <key>teamID</key>
-            <string>758YPU2N3M</string>
-            <key>signingStyle</key>
-            <string>manual</string>
-            <key>signingCertificate</key>
-            <string>Developer ID Application</string>
-          </dict>
-          </plist>
-          PLIST
-
           xcodebuild -exportArchive \
             -archivePath "$ARCHIVE_PATH" \
             -exportPath "$EXPORT_PATH" \
