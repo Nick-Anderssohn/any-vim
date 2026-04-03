@@ -25,10 +25,6 @@ jobs:
     env:
       KEYCHAIN_NAME: build.keychain
       KEYCHAIN_PASSWORD: ${{ github.run_id }}-${{ github.run_attempt }}
-      ARCHIVE_PATH: ${{ runner.temp }}/AnyVim.xcarchive
-      EXPORT_PATH: ${{ runner.temp }}/export
-      NOTARIZE_ZIP: ${{ runner.temp }}/AnyVim-notarize.zip
-      DMG_PATH: ${{ runner.temp }}/AnyVim.dmg
 
     steps:
       - name: Checkout
@@ -78,7 +74,7 @@ jobs:
             -project AnyVim.xcodeproj \
             -scheme AnyVim \
             -configuration Release \
-            -archivePath "$ARCHIVE_PATH" \
+            -archivePath "${{ runner.temp }}/AnyVim.xcarchive" \
             CODE_SIGN_STYLE=Manual \
             DEVELOPMENT_TEAM=758YPU2N3M \
             CODE_SIGN_IDENTITY="Developer ID Application" \
@@ -105,8 +101,8 @@ jobs:
       - name: Export archive
         run: |
           xcodebuild -exportArchive \
-            -archivePath "$ARCHIVE_PATH" \
-            -exportPath "$EXPORT_PATH" \
+            -archivePath "${{ runner.temp }}/AnyVim.xcarchive" \
+            -exportPath "${{ runner.temp }}/export" \
             -exportOptionsPlist /tmp/ExportOptions.plist
 
       - name: Notarize and staple
@@ -115,13 +111,13 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APP_SPECIFIC_PASSWORD: ${{ secrets.APP_SPECIFIC_PASSWORD }}
         run: |
-          APP_BUNDLE="$EXPORT_PATH/AnyVim.app"
+          APP_BUNDLE="${{ runner.temp }}/export/AnyVim.app"
 
           # Create zip for notarytool submission
-          ditto -c -k --keepParent "$APP_BUNDLE" "$NOTARIZE_ZIP"
+          ditto -c -k --keepParent "$APP_BUNDLE" "${{ runner.temp }}/AnyVim-notarize.zip"
 
           # Submit and wait for notarization result
-          xcrun notarytool submit "$NOTARIZE_ZIP" \
+          xcrun notarytool submit "${{ runner.temp }}/AnyVim-notarize.zip" \
             --apple-id "$APPLE_ID" \
             --team-id "$APPLE_TEAM_ID" \
             --password "$APP_SPECIFIC_PASSWORD" \
@@ -132,7 +128,7 @@ jobs:
 
       - name: Create DMG
         run: |
-          bash scripts/create-dmg.sh "$EXPORT_PATH/AnyVim.app" "$DMG_PATH"
+          bash scripts/create-dmg.sh "${{ runner.temp }}/export/AnyVim.app" "${{ runner.temp }}/AnyVim.dmg"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
