@@ -108,6 +108,33 @@ final class AccessibilityBridge {
         )
     }
 
+    // MARK: - Open Empty
+
+    /// Open vim with an empty buffer, skipping Cmd+A/Cmd+C.
+    /// Returns CaptureResult on success (with empty temp file), nil if permissions missing or no frontmost app.
+    func openEmpty() async -> CaptureResult? {
+        // Guard: need Accessibility permission
+        guard permissionChecker.isAccessibilityGranted else { return nil }
+
+        // Capture frontmost app for focus restore
+        guard let originalApp = appActivator.frontmostApplication() else { return nil }
+
+        // Snapshot clipboard before edit cycle (needed for restore on abort)
+        let snapshot = clipboardGuard.snapshot()
+
+        // Create empty temp file — no keystrokes posted
+        guard let tempURL = try? tempFileManager.createTempFile(content: "") else {
+            clipboardGuard.restore(snapshot)
+            return nil
+        }
+
+        return CaptureResult(
+            tempFileURL: tempURL,
+            originalApp: originalApp,
+            clipboardSnapshot: snapshot
+        )
+    }
+
     // MARK: - Restore
 
     /// Paste edited text back to the original app and restore the clipboard.

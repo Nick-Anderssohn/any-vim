@@ -29,6 +29,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Launch
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Register UserDefaults defaults before any reads (ensures bool(forKey:) returns correct value when key absent)
+        UserDefaults.standard.register(defaults: ["copyExistingText": true])
+
         // Suppress Dock icon and Force Quit entry — menu bar daemon pattern
         NSApp.setActivationPolicy(.accessory)
 
@@ -150,7 +153,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 statusItem?.button?.image?.isTemplate = true
             }
 
-            guard let result = await accessibilityBridge.captureText() else {
+            let result: CaptureResult?
+            if UserDefaults.standard.bool(forKey: "copyExistingText") {
+                result = await accessibilityBridge.captureText()
+            } else {
+                result = await accessibilityBridge.openEmpty()
+            }
+            guard let result else {
                 showCaptureFailureAlert()
                 return
             }

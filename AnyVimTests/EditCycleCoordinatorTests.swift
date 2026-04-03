@@ -8,12 +8,20 @@ final class MockTextCapture: TextCapturing {
     var captureTextResult: CaptureResult? = nil
     var captureTextCallCount = 0
 
+    var openEmptyResult: CaptureResult? = nil
+    var openEmptyCallCount = 0
+
     var restoreTextCalls: [(content: String, captureResult: CaptureResult)] = []
     var abortAndRestoreCalls: [CaptureResult] = []
 
     func captureText() async -> CaptureResult? {
         captureTextCallCount += 1
         return captureTextResult
+    }
+
+    func openEmpty() async -> CaptureResult? {
+        openEmptyCallCount += 1
+        return openEmptyResult
     }
 
     func restoreText(_ editedContent: String, captureResult: CaptureResult) async {
@@ -62,6 +70,7 @@ final class EditCycleCoordinatorTests: XCTestCase {
             try? FileManager.default.removeItem(at: url)
         }
         createdTempFiles = []
+        UserDefaults.standard.removeObject(forKey: "copyExistingText")
         delegate = nil
         mockCapture = nil
         mockVim = nil
@@ -182,5 +191,54 @@ final class EditCycleCoordinatorTests: XCTestCase {
 
         XCTAssertFalse(delegate.isEditSessionActive,
             "isEditSessionActive should be false after edit cycle completes (D-02)")
+    }
+
+    // MARK: - Copy Existing Text toggle tests
+
+    func testOpenEmptyCalledWhenCopyExistingTextDisabled() async throws {
+        UserDefaults.standard.set(false, forKey: "copyExistingText")
+        let tempURL = try makeTempFile()
+        mockCapture.openEmptyResult = makeCaptureResult(tempFileURL: tempURL)
+        mockVim.exitResult = .aborted
+
+        delegate.handleHotkeyTrigger()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertEqual(mockCapture.openEmptyCallCount, 1,
+            "openEmpty() should be called when copyExistingText is false")
+        XCTAssertEqual(mockCapture.captureTextCallCount, 0,
+            "captureText() should NOT be called when copyExistingText is false")
+    }
+
+    func testCaptureTextCalledWhenCopyExistingTextEnabled() async throws {
+        UserDefaults.standard.set(true, forKey: "copyExistingText")
+        let tempURL = try makeTempFile()
+        mockCapture.captureTextResult = makeCaptureResult(tempFileURL: tempURL)
+        mockVim.exitResult = .aborted
+
+        delegate.handleHotkeyTrigger()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertEqual(mockCapture.captureTextCallCount, 1,
+            "captureText() should be called when copyExistingText is true")
+        XCTAssertEqual(mockCapture.openEmptyCallCount, 0,
+            "openEmpty() should NOT be called when copyExistingText is true")
+    }
+
+    func testCaptureTextCalledWhenCopyExistingTextKeyAbsent() async throws {
+        // Ensure key is absent, then register defaults so bool(forKey:) returns true
+        UserDefaults.standard.removeObject(forKey: "copyExistingText")
+        UserDefaults.standard.register(defaults: ["copyExistingText": true])
+        let tempURL = try makeTempFile()
+        mockCapture.captureTextResult = makeCaptureResult(tempFileURL: tempURL)
+        mockVim.exitResult = .aborted
+
+        delegate.handleHotkeyTrigger()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        XCTAssertEqual(mockCapture.captureTextCallCount, 1,
+            "captureText() should be called when copyExistingText key is absent (default ON)")
+        XCTAssertEqual(mockCapture.openEmptyCallCount, 0,
+            "openEmpty() should NOT be called when copyExistingText key is absent")
     }
 }
