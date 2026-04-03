@@ -153,8 +153,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 statusItem?.button?.image?.isTemplate = true
             }
 
+            let copyExistingText = UserDefaults.standard.bool(forKey: "copyExistingText")
             let result: CaptureResult?
-            if UserDefaults.standard.bool(forKey: "copyExistingText") {
+            if copyExistingText {
                 result = await accessibilityBridge.captureText()
             } else {
                 result = await accessibilityBridge.openEmpty()
@@ -174,7 +175,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     // pasted text matches what the user actually typed.
                     let trimmed = editedContent.replacingOccurrences(of: "\\n+$", with: "", options: .regularExpression)
                     // REST-01, REST-02: paste edited text back to original app
-                    await accessibilityBridge.restoreText(trimmed, captureResult: result)
+                    await accessibilityBridge.restoreText(trimmed, captureResult: result, selectAllBeforePaste: copyExistingText)
                     // REST-05: delete temp file (restoreText does not delete)
                     TempFileManager().deleteTempFile(at: result.tempFileURL)
                 } else {

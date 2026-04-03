@@ -5,7 +5,7 @@ import Foundation
 protocol TextCapturing {
     func captureText() async -> CaptureResult?
     func openEmpty() async -> CaptureResult?
-    func restoreText(_ editedContent: String, captureResult: CaptureResult) async
+    func restoreText(_ editedContent: String, captureResult: CaptureResult, selectAllBeforePaste: Bool) async
     func abortAndRestore(captureResult: CaptureResult)
 }
 

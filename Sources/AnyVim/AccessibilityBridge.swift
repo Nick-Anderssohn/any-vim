@@ -139,7 +139,7 @@ final class AccessibilityBridge {
 
     /// Paste edited text back to the original app and restore the clipboard.
     /// Called after vim :wq with the edited file content.
-    func restoreText(_ editedContent: String, captureResult: CaptureResult) async {
+    func restoreText(_ editedContent: String, captureResult: CaptureResult, selectAllBeforePaste: Bool) async {
         let app = captureResult.originalApp
 
         // D-08: if original app quit during session, skip everything
@@ -153,9 +153,11 @@ final class AccessibilityBridge {
         appActivator.activate(app)
         try? await Task.sleep(nanoseconds: Self.focusRestoreDelayNs)  // D-03
 
-        // Cmd+A (select all) then Cmd+V (paste)
-        keystrokeSender.postKeystroke(keyCode: CGKeyCode(kVK_ANSI_A), flags: .maskCommand)
-        try? await Task.sleep(nanoseconds: Self.pasteDelayNs)
+        // Cmd+A (select all) then Cmd+V (paste) — skip Cmd+A when no text was captured
+        if selectAllBeforePaste {
+            keystrokeSender.postKeystroke(keyCode: CGKeyCode(kVK_ANSI_A), flags: .maskCommand)
+            try? await Task.sleep(nanoseconds: Self.pasteDelayNs)
+        }
         keystrokeSender.postKeystroke(keyCode: CGKeyCode(kVK_ANSI_V), flags: .maskCommand)
 
         // D-06: wait for target app to finish reading pasteboard before restoring
