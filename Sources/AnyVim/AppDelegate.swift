@@ -77,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             loginItemManager: loginItemManager,
             hotkeyManager: hotkeyManager,
             vimPathResolver: UserDefaultsVimPathResolver(),
-            onVimPathChange: { [weak self] in self?.rebuildMenu() }
+            onMenuRefreshNeeded: { [weak self] in self?.rebuildMenu() }
         )
         statusItem.menu = menuBarController.buildMenu()
 

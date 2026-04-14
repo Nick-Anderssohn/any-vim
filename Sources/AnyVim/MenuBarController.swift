@@ -9,7 +9,7 @@ final class MenuBarController {
     private let loginItemManager: LoginItemManaging
     private let hotkeyManager: HotkeyManaging?
     private let vimPathResolver: VimPathResolving?
-    private let onVimPathChange: (() -> Void)?
+    private let onMenuRefreshNeeded: (() -> Void)?
 
     // MARK: - Init
 
@@ -18,13 +18,13 @@ final class MenuBarController {
         loginItemManager: LoginItemManaging,
         hotkeyManager: HotkeyManaging? = nil,
         vimPathResolver: VimPathResolving? = nil,
-        onVimPathChange: (() -> Void)? = nil
+        onMenuRefreshNeeded: (() -> Void)? = nil
     ) {
         self.permissionManager = permissionManager
         self.loginItemManager = loginItemManager
         self.hotkeyManager = hotkeyManager
         self.vimPathResolver = vimPathResolver
-        self.onVimPathChange = onVimPathChange
+        self.onMenuRefreshNeeded = onMenuRefreshNeeded
     }
 
     // MARK: - Menu construction
@@ -164,7 +164,7 @@ final class MenuBarController {
     @objc private func toggleCopyExistingText() {
         let current = UserDefaults.standard.bool(forKey: "copyExistingText")
         UserDefaults.standard.set(!current, forKey: "copyExistingText")
-        // Menu checkmark updates on next open — buildMenu() reads live state
+        onMenuRefreshNeeded?()
     }
 
     @objc private func toggleLaunchAtLogin() {
@@ -173,7 +173,7 @@ final class MenuBarController {
         } else {
             loginItemManager.enable()
         }
-        // Menu checkmark updates on next open — buildMenu() reads live state
+        onMenuRefreshNeeded?()
     }
 
     @objc private func setVimPath() {
@@ -191,13 +191,13 @@ final class MenuBarController {
             let path = url.path
             if FileManager.default.isExecutableFile(atPath: path) {
                 UserDefaults.standard.set(path, forKey: "customVimPath")
-                onVimPathChange?()
+                onMenuRefreshNeeded?()
             }
         }
     }
 
     @objc private func resetVimPath() {
         UserDefaults.standard.removeObject(forKey: "customVimPath")
-        onVimPathChange?()
+        onMenuRefreshNeeded?()
     }
 }
