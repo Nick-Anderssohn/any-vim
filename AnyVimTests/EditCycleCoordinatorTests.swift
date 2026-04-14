@@ -24,7 +24,7 @@ final class MockTextCapture: TextCapturing {
         return openEmptyResult
     }
 
-    func restoreText(_ editedContent: String, captureResult: CaptureResult) async {
+    func restoreText(_ editedContent: String, captureResult: CaptureResult, selectAllBeforePaste: Bool) async {
         restoreTextCalls.append((editedContent, captureResult))
     }
 

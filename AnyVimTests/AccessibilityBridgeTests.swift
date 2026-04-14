@@ -311,7 +311,7 @@ final class AccessibilityBridgeTests: XCTestCase {
         mockKeystrokeSender.postedKeystrokes = []
 
         // Call restore
-        await bridge.restoreText("edited content", captureResult: captureResult!)
+        await bridge.restoreText("edited content", captureResult: captureResult!, selectAllBeforePaste: true)
 
         XCTAssertGreaterThanOrEqual(mockKeystrokeSender.postedKeystrokes.count, 2,
             "restoreText should post at least 2 keystrokes")
@@ -337,7 +337,7 @@ final class AccessibilityBridgeTests: XCTestCase {
 
         mockAppActivator.activateCalled = false
 
-        await bridge.restoreText("edited", captureResult: captureResult!)
+        await bridge.restoreText("edited", captureResult: captureResult!, selectAllBeforePaste: true)
 
         XCTAssertTrue(mockAppActivator.activateCalled,
             "restoreText should activate the original app (D-07)")
@@ -357,7 +357,7 @@ final class AccessibilityBridgeTests: XCTestCase {
         mockPasteboard.setStringCalled = false
         mockPasteboard.lastSetString = nil
 
-        await bridge.restoreText("edited content", captureResult: captureResult!)
+        await bridge.restoreText("edited content", captureResult: captureResult!, selectAllBeforePaste: true)
 
         XCTAssertTrue(mockPasteboard.setStringCalled,
             "restoreText should set clipboard string before pasting")
