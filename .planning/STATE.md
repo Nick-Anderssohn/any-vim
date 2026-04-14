@@ -69,9 +69,11 @@ None — all v1.0 blockers resolved.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260402-rec | Set up GitHub Actions workflow for build, sign, notarize, and release | 2026-04-03 | 45e0ab2 | [260402-rec-set-up-github-actions-workflow-for-build](./quick/260402-rec-set-up-github-actions-workflow-for-build/) |
+| 260403-ivm | Add option to disable copying existing text (Copy Existing Text toggle) | 2026-04-03 | a6234b1 | [260403-ivm-add-option-to-disable-copying-existing-t](./quick/260403-ivm-add-option-to-disable-copying-existing-t/) |
+| 260403-j6j | Skip Cmd+A before paste when copyExistingText is off | 2026-04-03 | cbb9f9b | [260403-j6j-skip-cmd-a-before-paste-when-copyexistin](./quick/260403-j6j-skip-cmd-a-before-paste-when-copyexistin/) |
 
 ## Session Continuity
 
 Last session: 2026-04-03
-Stopped at: Completed quick task 260402-rec
+Stopped at: Completed quick task 260403-j6j
 Resume file: None
